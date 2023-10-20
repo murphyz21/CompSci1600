@@ -33,6 +33,7 @@ public class Place<Places> implements IThing {
 		this.template = template;
 	}
 	
+	
 	public String getName() {
 		return placeName;
 		

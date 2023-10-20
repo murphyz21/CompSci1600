@@ -3,7 +3,15 @@ import com.entities.Things.ThingNames;
 public class ShortStory implements IStory{
 	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place startCyard,camp, cYard1, cYard2, cYrad3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8;
-	private Item 
+	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
+	
+	private enum ActionNames {
+		
+	}
+	
+	private enum NodeLabels {
+		
+	}
 	
 	public INode getRoot() {
 		return new Node("root");
