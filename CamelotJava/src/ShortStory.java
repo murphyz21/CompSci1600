@@ -66,4 +66,5 @@ public class ShortStory implements IStory{
 		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
 		guard3 = new Character(ThingNames.guard3);
 	}
+	// testing1
 }
