@@ -1,10 +1,10 @@
 package com.entities;
 
-public class Item<Items> implements IEntity, IThing {
+public class Item implements IEntity, IThing<com.entities.Item.Items> {
 	private String itemName;
 	private Items template;
 	
-	enum Items {
+	public enum Items {
 		Apple, 
 		Bag, 
 		BlueBook, 

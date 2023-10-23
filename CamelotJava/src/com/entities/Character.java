@@ -1,6 +1,6 @@
 package com.entities;
 
-public class Character<BodyTypes> implements IEntity {
+public class Character implements IEntity, IThing<BodyTypes> {
 	private String characterName;
 	private BodyTypes bodyType;
 	private Clothing clothing;

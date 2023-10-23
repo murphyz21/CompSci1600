@@ -1,10 +1,10 @@
 package com.entities;
 
-public class Place<Places> implements IThing {
+public class Place implements IThing<com.entities.Place.Places> {
 	private String placeName;
 	private Places template;
 	
-	enum Places {
+	public enum Places {
 		AlchemyShop, 
 		BlackSmith, 
 		Bridge, 
@@ -41,5 +41,7 @@ public class Place<Places> implements IThing {
 	public Places getTemplate() {
 		return template;
 	}
-	
+	public Furniture getFurniture(String name) {
+		return new Furniture(placeName + "." + name);
+	}
 }
