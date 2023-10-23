@@ -16,7 +16,7 @@ import com.storygraph.Node;
 public class ShortStory implements IStory{
 	com.entities.Character edith;
 	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
-	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8;
+	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
 	
 	private enum ActionNames {
@@ -83,10 +83,10 @@ public class ShortStory implements IStory{
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard1));
-		sequence.add(new Position(edith, cYard1));
+		sequence.add(new Create<Place>(courtYard));
+		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(greenbook));
-		sequence.add(new Position(greenbook, cYard1, "Ground"));
+		sequence.add(new Position(greenbook, courtYard, "Ground"));
 		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -297,5 +297,157 @@ public class ShortStory implements IStory{
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
+	
+	private ActionSequence getEvilBook() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(courtYard));
+		sequence.add(new Position(edith, courtYard));
+		sequence.add(new Create<Item>(evilbook));
+		sequence.add(new Position(evilbook, courtYard, "Big Stall"));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+
+	private ActionSequence getGoToAlchemyShop() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getBuyPoison() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new Create<Item>(greenPotion));
+		sequence.add(new Position(greenPotion, alchemyShop, "Bar"));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getStudyEvilBook() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getGoToCourtYard1A() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard5));
+		sequence.add(new Position(edith, cYard5));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+
+	private ActionSequence getKingDrinksPoison() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard5));
+		sequence.add(new Position(edith, cYard5));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getKingKillsYou() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard5));
+		sequence.add(new Position(edith, cYard5));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getDrinkMakesWeak() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getGoToCourtYard2A() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard6));
+		sequence.add(new Position(edith, cYard6));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getWeakFromPoisonDie() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard6));
+		sequence.add(new Position(edith, cYard6));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getWeakGetArrested() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard6));
+		sequence.add(new Position(edith, cYard6));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getBuyPotion() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new Create<Item>(bluePotion));
+		sequence.add(new Position(bluePotion, alchemyShop, "Bar"));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+	 
+	private ActionSequence getDrinkGivesPowers() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getGoToCourtYard4A() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard8));
+		sequence.add(new Position(edith, cYard8));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getPowersNotUsedGetArrested() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard8));
+		sequence.add(new Position(edith, cYard8));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+	private ActionSequence getPowersBecomeKing() { 
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard8));
+		sequence.add(new Position(edith, cYard8));
+		sequence.add(new SetCameraFocus(edith));
+		return sequence;
+	}
+
+
 	// testing1
 }
