@@ -6,6 +6,7 @@ import com.actions.Pickup;
 import com.actions.Position;
 import com.actions.SetCameraFocus;
 import com.actions.ShowMenu;
+import com.actions.Take;
 import com.entities.Item.Items;
 import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
@@ -101,11 +102,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(greenbook));
-		sequence.add(new Position(greenbook, courtYard, "Ground"));
+		sequence.add(new Position(greenbook, courtYard, "BigStall.Right"));
 		sequence.add(new Create<Item>(evilbook));
-		sequence.add(new Position(evilbook, courtYard, "Ground"));
-		sequence.add(new Pickup(edith, evilbook, ));
-		sequence.add(new Exit(edith, courtYard.Gate, true));
+		sequence.add(new Position(evilbook, courtYard, "BigStall.Left"));
 		return sequence;
 	}
 	private ActionSequence getGreenBook() {
@@ -297,11 +296,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getEvilBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(courtYard));
-		sequence.add(new Position(edith, courtYard));
-		sequence.add(new Create<Item>(evilbook));
-		sequence.add(new Position(evilbook, courtYard, "Big Stall"));
+		sequence.add(new Take(edith, evilbook));
+		sequence.add(new Exit(edith, courtYard.getFurniture("gate"), true));
 		return sequence;
 	}
 
