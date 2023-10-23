@@ -1,23 +1,23 @@
 package com.actions;
 
 public abstract class Attack implements IAction{
-	private Character attack;
-	private Character name;
+	private Character attacker;
+
 	private Character enemy;
 	private Boolean bool = false;
 	
-	public Attack(Character name, Character enemy) {
-		this.name = name;
+	public Attack(Character attacker, Character enemy) {
+		this.attacker = attacker;
 		this.enemy = enemy;
 	}
 	
-	public Attack(Character name, Character enemy, boolean bool) {
-		this.name = name;
+	public Attack(Character attacker, Character enemy, boolean bool) {
+		this.attacker=attacker;
 		this.enemy = enemy;
 		this.bool = bool;
 	}
 	public String getName() {
-		return "attack";
+		return "Attack";
 	}
 	
 	public boolean getShouldWait() {
@@ -26,7 +26,7 @@ public abstract class Attack implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), attack.getName(attack));
+		return String.format("%s(%s)", getName(), attacker, enemy, bool);
 	}
 }
 }

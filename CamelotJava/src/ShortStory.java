@@ -37,18 +37,18 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	public void getThings() {
 		//Start
-		edith = new Character(ThingNames.Edith);
-		startCyard = new Place(ThingNames.startCyard, Places.Courtyard);
-		greenbook = new Item(ThingNames.greenbook, Items.GreenBook);
-		king = new Character(ThingNames.king);
+		edith = new Character(ThingNames.Edith.toString());
+		startCyard = new Place(ThingNames.startCyard.toString(), Places.Courtyard);
+		greenbook = new Item(ThingNames.greenbook.toString(), Items.GreenBook);
+		king = new Character(ThingNames.king.toString());
 		
 		//Left Side
-		camp = new Place(ThingNames.camp, Places.Camp);
-		spellBook = new Item(ThingNames.spellBook, Items.SpellBook);
-		cYard1 = new Place(ThingNames.Courtyard, Places.Courtyard);
-		campBegger1 = new Character(ThingNames.campBegger1);
-		campBegger2 = new Character(ThingNames.campBegger2);
-		campBegger3 = new Character(ThingNames.campBegger3);
+		camp = new Place(ThingNames.camp.toString(), Places.Camp);
+		spellBook = new Item(ThingNames.spellBook.toString(), Items.SpellBook);
+		cYard1 = new Place(ThingNames.Courtyard.toString(), Places.Courtyard);
+		campBegger1 = new Character(ThingNames.campBegger1.toString());
+		campBegger2 = new Character(ThingNames.campBegger2.toString());
+		campBegger3 = new Character(ThingNames.campBegger3.toString());
 		
 		cYard2 = new Place(ThingNames.cYard2, Places.Courtyard);
 		
@@ -96,9 +96,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(greenbook));
 		sequence.add(new Position(greenbook, courtYard, "Ground"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
-		Action(Leave, CourtYard, exit);
 		return sequence;
 	}
 	
@@ -111,7 +108,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(sword, camp, "Ground"));
 		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new ShowMenu(true));
-		Take(edith, sword);
 		return sequence;
 	}
 	
