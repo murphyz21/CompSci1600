@@ -1,4 +1,8 @@
+import com.entities.Item.Items;
+import com.entities.Place;
+import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
+import com.storygraph.INode;
 
 public class ShortStory implements IStory{
 	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
@@ -62,7 +66,7 @@ public class ShortStory implements IStory{
 		bluePotion = new Item(ThingNames.bluePotion, Items.BluePotion);
 		greenPotion = new Item(ThingNames.greenPotion, Items.GreenPotion);
 		cYard7 = new Place(ThingNames.cYard7, Places.Courtyard);
-		
+		//Kathryn test comment
 		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
 		guard3 = new Character(ThingNames.guard3);
 	}
