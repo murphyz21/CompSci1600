@@ -1,6 +1,6 @@
 package com.entities;
 
-public class Character implements IEntity, IThing<BodyTypes> {
+public class Character implements IEntity, IThing<com.entities.Character.BodyTypes> {
 	private String characterName;
 	private BodyTypes bodyType;
 	private Clothing clothing;
@@ -66,4 +66,12 @@ public class Character implements IEntity, IThing<BodyTypes> {
 	public String getName() {
 		return characterName;
 	}
+
+	@Override
+	public BodyTypes getTemplate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
