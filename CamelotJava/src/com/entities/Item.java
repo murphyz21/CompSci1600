@@ -21,6 +21,7 @@ public class Item implements IEntity, IThing<com.entities.Item.Items> {
 		GoldCup, 
 		GreenBook, 
 		GreenKey, 
+		GreenPotion,
 		Hammer, 
 		Helmet, 
 		InkandQuill, 

@@ -37,48 +37,48 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	public void getThings() {
 		//Start
-		edith = new Character(ThingNames.Edith);
-		startCyard = new Place(ThingNames.startCyard, Places.Courtyard);
-		greenbook = new Item(ThingNames.greenbook, Items.GreenBook);
-		king = new Character(ThingNames.king);
+		edith = new Character(ThingNames.Edith.toString());
+		startCyard = new Place(ThingNames.startCyard.toString(), Places.Courtyard);
+		greenbook = new Item(ThingNames.greenbook.toString(), Items.GreenBook);
+		king = new Character(ThingNames.king.toString());
 		
 		//Left Side
-		camp = new Place(ThingNames.camp, Places.Camp);
-		spellBook = new Item(ThingNames.spellBook, Items.SpellBook);
-		cYard1 = new Place(ThingNames.Courtyard, Places.Courtyard);
-		campBegger1 = new Character(ThingNames.campBegger1);
-		campBegger2 = new Character(ThingNames.campBegger2);
-		campBegger3 = new Character(ThingNames.campBegger3);
+		camp = new Place(ThingNames.camp.toString(), Places.Camp);
+		spellBook = new Item(ThingNames.spellBook.toString(), Items.SpellBook);
+		cYard1 = new Place(ThingNames.Courtyard.toString(), Places.Courtyard);
+		campBegger1 = new Character(ThingNames.campBegger1.toString());
+		campBegger2 = new Character(ThingNames.campBegger2.toString());
+		campBegger3 = new Character(ThingNames.campBegger3.toString());
 		
-		cYard2 = new Place(ThingNames.cYard2, Places.Courtyard);
+		cYard2 = new Place(ThingNames.cYard2.toString(), Places.Courtyard);
 		
-		sword = new Item(ThingNames.sword, Items.Sword);
-		helmet = new Item(ThingNames.helmet, Items.Helmet);
-		torch = new Item(ThingNames.torch, Items.LitTorch);
+		sword = new Item(ThingNames.Sword.toString(), Items.Sword);
+		helmet = new Item(ThingNames.Helmet.toString(), Items.Helmet);
+		torch = new Item(ThingNames.Torch.toString(), Items.LitTorch);
 		
-		cYard3 = new Place(ThingNames.cYard3, Places.Courtyard);
+		cYard3 = new Place(ThingNames.cYard3.toString(), Places.Courtyard);
 		
 		
-		cYard4 = new Place(ThingNames.cYard4, Places.Courtyard);
-		guard1 = new Character(ThingNames.guard1);
+		cYard4 = new Place(ThingNames.cYard4.toString(), Places.Courtyard);
+		guard1 = new Character(ThingNames.guard1.toString());
 		
 		//Right Side
-		evilbook = new Item(ThingNames.evilbook, Items.EvilBook);
-		alchemyShop = new Place(Thingnames.alchemyShop, Places.AlchemyShop);
-		alchemist - new Character(ThingNames.alchemist);
-		poison = new Item(ThingNames.poison, Items.GreenPotion);
+		evilbook = new Item(ThingNames.evilbook.toString(), Items.EvilBook);
+		alchemyShop = new Place(ThingNames.alchemyShop.toString(), Places.AlchemyShop);
+		alchemist = new Character(ThingNames.alchemist.toString());
+		poison = new Item(ThingNames.poison.toString(), Items.GreenPotion);
 		
-		cYard5 = new Place(ThingNames.cYard5, Places.Courtyard);
+		cYard5 = new Place(ThingNames.cYard5.toString(), Places.Courtyard);
 		
-		cYard6 = new Place(ThingNames.cYard6, Places.Courtyard);
-		guard2 = new Character(ThingNames.guard2);
+		cYard6 = new Place(ThingNames.cYard6.toString(), Places.Courtyard);
+		guard2 = new Character(ThingNames.guard2.toString());
 		
-		bluePotion = new Item(ThingNames.bluePotion, Items.BluePotion);
-		greenPotion = new Item(ThingNames.greenPotion, Items.GreenPotion);
-		cYard7 = new Place(ThingNames.cYard7, Places.Courtyard);
-		//Kathryn test comment
-		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
-		guard3 = new Character(guard3);
+		bluePotion = new Item(ThingNames.bluePotion.toString(), Items.BluePotion);
+		greenPotion = new Item(ThingNames.greenPotion.toString(), Items.GreenPotion);
+		cYard7 = new Place(ThingNames.cYard7.toString(), Places.Courtyard);
+		
+		cYard8 = new Place(ThingNames.cYard8.toString(), Places.Courtyard);
+		guard3 = new Character(ThingNames.guard3.toString());
 	}
 	
 	private ActionSequence getInitSequence() {
