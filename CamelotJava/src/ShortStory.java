@@ -1,3 +1,4 @@
+import com.entities.Item;
 import com.entities.Item.Items;
 import com.entities.Place;
 import com.entities.Place.Places;
@@ -6,7 +7,7 @@ import com.storygraph.INode;
 
 public class ShortStory implements IStory{
 	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
-	private Place startCyard,camp, cYard1, cYard2, cYrad3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8;
+	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
 	
 	private enum ActionNames {
@@ -36,7 +37,7 @@ public class ShortStory implements IStory{
 		spellBook = new Item(ThingNames.spellBook, Items.SpellBook);
 		cYard1 = new Place(ThingNames.Courtyard, Places.Courtyard);
 		campBegger1 = new Character(ThingNames.campBegger1);
-		campbegger2 = new Character(ThingNames.campBegger2);
+		campBegger2 = new Character(ThingNames.campBegger2);
 		campBegger3 = new Character(ThingNames.campBegger3);
 		
 		cYard2 = new Place(ThingNames.cYard2, Places.Courtyard);
@@ -46,7 +47,6 @@ public class ShortStory implements IStory{
 		torch = new Item(ThingNames.torch, Items.LitTorch);
 		
 		cYard3 = new Place(ThingNames.cYard3, Places.Courtyard);
-		youDieKing = new Character(ThingNames.youdieKing);
 		
 		
 		cYard4 = new Place(ThingNames.cYard4, Places.Courtyard);
