@@ -1,12 +1,21 @@
+import com.actions.ActionSequence;
+import com.actions.Create;
+import com.actions.Position;
+import com.actions.SetCameraFocus;
+import com.actions.ShowMenu;
+import com.entities.IEntity;
 import com.entities.Item;
 import com.entities.Item.Items;
 import com.entities.Place;
 import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
+import com.sequences.CharacterCreation;
 import com.storygraph.INode;
+import com.storygraph.Node;
 
 public class ShortStory implements IStory{
-	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
+	com.entities.Character edith;
+	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
 	
@@ -69,6 +78,224 @@ public class ShortStory implements IStory{
 		//Kathryn test comment
 		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
 		guard3 = new Character(ThingNames.guard3);
+	}
+	
+	private ActionSequence getGreenBook() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(cYard1));
+		sequence.add(new Position(edith, cYard1));
+		sequence.add(new Create<Item>(greenbook));
+		sequence.add(new Position(greenbook, cYard1, "Ground"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGoToCamp() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(sword, camp, "Ground"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getTakeSword() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(helmet));
+		sequence.add(new Create<Item>(torch));
+		sequence.add(new Position(helmet, camp, "Ground"));
+		sequence.add(new Position(torch, camp, "Ground"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	private ActionSequence getGetArmour() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(sword, camp, "InHand"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getTakeTorch() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(torch));
+		sequence.add(new Position(torch, camp, "InHand"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGoToCourtYard3C() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard2));
+		sequence.add(new Position(edith, cYard2));
+		sequence.add(new Create<Item>(helmet));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(helmet, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getYouDie() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard2));
+		sequence.add(new Position(edith, cYard2));
+		sequence.add(new Create<Item>(helmet));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(helmet, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getSwordBecomeKing() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard2));
+		sequence.add(new Position(edith, cYard2));
+		sequence.add(new Create<Item>(helmet));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(helmet, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGoToCourtYard4C() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard3));
+		sequence.add(new Position(edith, cYard3));
+		sequence.add(new Create<Item>(torch));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(torch, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getTorchBecomeKing() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard3));
+		sequence.add(new Position(edith, cYard3));
+		sequence.add(new Create<Item>(torch));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(torch, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGuardsArrestYou() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard3));
+		sequence.add(new Position(edith, cYard3));
+		sequence.add(new Create<Item>(torch));
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new Position(torch, edith));
+		sequence.add(new Position(sword, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	//New Branch
+	private ActionSequence getTakeSpellBook() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(spellBook));
+		sequence.add(new Position(spellBook, camp, "HiddenBook"));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getReadSpellBook() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(camp));
+		sequence.add(new Position(edith, camp));
+		sequence.add(new Create<Item>(spellBook));
+		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGoToCourtYard2c() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard1));
+		sequence.add(new Position(edith, cYard1));
+		sequence.add(new Position(king, cYard1));
+		sequence.add(new Create<Item>(spellBook));
+		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getNoSpellsGetArrested() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard1));
+		sequence.add(new Position(edith, cYard1));
+		sequence.add(new Position(king, cYard1));
+		sequence.add(new Create<Item>(spellBook));
+		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getGoodSpellsKingDies() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Create<Place>(cYard1));
+		sequence.add(new Position(edith, cYard1));
+		sequence.add(new Position(king, cYard1));
+		sequence.add(new Create<Item>(spellBook));
+		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
 	}
 	// testing1
 }
