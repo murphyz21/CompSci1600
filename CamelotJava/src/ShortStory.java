@@ -6,6 +6,7 @@ import com.actions.Pickup;
 import com.actions.Position;
 import com.actions.SetCameraFocus;
 import com.actions.ShowMenu;
+import com.actions.Take;
 import com.entities.Item.Items;
 import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
@@ -104,27 +105,21 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(greenbook, courtYard, "Ground"));
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, courtYard, "Ground"));
-		sequence.add(new Pickup(edith, evilbook, ));
-		sequence.add(new Exit(edith, courtYard.Gate, true));
 		return sequence;
 	}
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(courtYard));
-		sequence.add(new Position(edith, courtYard));
-		sequence.add(new Create<Item>(greenbook));
-		sequence.add(new Position(greenbook, courtYard, "Ground"));
+		sequence.add(new Take(edith, greenbook));
+		sequence.add(new Exit(edith, courtYard.getFurniture("gate"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCamp() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(camp));
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(sword, camp, "Ground"));
+		sequence.add(new Position(sword, camp, "Log"));
 
 		return sequence;
 	}
