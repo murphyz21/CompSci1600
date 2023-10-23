@@ -2,6 +2,7 @@ import com.actions.ActionSequence;
 import com.actions.Create;
 import com.actions.Exit;
 import com.actions.IAction;
+import com.actions.Pickup;
 import com.actions.Position;
 import com.actions.SetCameraFocus;
 import com.actions.ShowMenu;
@@ -103,6 +104,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(greenbook, courtYard, "Ground"));
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, courtYard, "Ground"));
+		sequence.add(new Pickup(edith, evilbook, ));
 		sequence.add(new Exit(edith, courtYard.Gate, true));
 		return sequence;
 	}
