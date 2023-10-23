@@ -1,19 +1,20 @@
 import com.actions.ActionSequence;
 import com.actions.Create;
+import com.actions.IAction;
 import com.actions.Position;
 import com.actions.SetCameraFocus;
 import com.actions.ShowMenu;
-import com.entities.IEntity;
-import com.entities.Item;
 import com.entities.Item.Items;
-import com.entities.Place;
 import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
 import com.sequences.CharacterCreation;
+import com.storygraph.ActionMap;
 import com.storygraph.INode;
 import com.storygraph.Node;
+import com.entities.*;
+import com.entities.Character;
 
-public class ShortStory implements IStory{
+public class ShortStory implements IStory, IAction, IThing, IEntity{
 	com.entities.Character edith;
 	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8, courtYard;
@@ -77,7 +78,7 @@ public class ShortStory implements IStory{
 		cYard7 = new Place(ThingNames.cYard7, Places.Courtyard);
 		//Kathryn test comment
 		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
-		guard3 = new Character(ThingNames.guard3);
+		guard3 = new Character(guard3);
 	}
 	
 	private ActionSequence getInitSequence() {
@@ -97,6 +98,7 @@ public class ShortStory implements IStory{
 		sequence.add(new Position(greenbook, courtYard, "Ground"));
 		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new ShowMenu(true));
+		Action(Leave, CourtYard, exit);
 		return sequence;
 	}
 	
@@ -109,6 +111,7 @@ public class ShortStory implements IStory{
 		sequence.add(new Position(sword, camp, "Ground"));
 		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new ShowMenu(true));
+		Take(edith, sword);
 		return sequence;
 	}
 	
@@ -264,7 +267,7 @@ public class ShortStory implements IStory{
 		return sequence;
 	}
 	
-	private ActionSequence getGoToCourtYard2c() {
+	private ActionSequence getGoToCourtYard2C() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.combineWith(new CharacterCreation(king));
@@ -354,7 +357,8 @@ public class ShortStory implements IStory{
 		sequence.add(new Position(edith, cYard5));
 		sequence.add(new SetCameraFocus(edith));
 		return sequence;
-
+	}
+		
 	private ActionSequence getKingDrinksPoison() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
@@ -456,6 +460,25 @@ public class ShortStory implements IStory{
 		return sequence;
 	}
 
+	public ActionMap getMap() {
+		var map = new ActionMap();
+		map.add(GreenBook, getGreenBook());
+		map.add(GoToCamp, getGoToCamp());
+		map.add(TakeSword, getTakeSword());
+		map.add(GetArmour, getGetArmour());
+		map.add(TakeTorch, getTakeTorch());
+		map.add(GoToCourtYard3C, getGoToCourtYard3C());
+		map.add(YouDie, getYouDie());
+		map.add(SwordBecomeKing, getSwordBecomeKing());
+		map.add(GoToCourtYard4C, getGoToCourtYard4C());
+		map.add(TorchBecomeKing, getTorchBecomeKing());
+		map.add(GuardsArrestYou, getGuardsArrestYou());
+		map.add(TakeSpellBook, getTakeSpellBook());
+		map.add(ReadSpellBook, getReadSpellBook());
+		map.add(GoToCourtYard2C, getGoToCourtYard2C());
+		map.add(NoSpellsGetArrested, getNoSpellsGetArrested());
+		map.add(GoodSpellsKingDies, getGoodSpellsKingDies());
+	}
 
 	// testing1
 }
