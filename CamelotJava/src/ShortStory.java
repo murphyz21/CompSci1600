@@ -26,7 +26,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private enum NodeLabels {
 		Init, Start, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
-		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4a, PowersNotUsedGetArrested, 
+		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
 	}
@@ -458,22 +458,39 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	public ActionMap getMap() {
 		var map = new ActionMap();
-		map.add(GreenBook, getGreenBook());
-		map.add(GoToCamp, getGoToCamp());
-		map.add(TakeSword, getTakeSword());
-		map.add(GetArmour, getGetArmour());
-		map.add(TakeTorch, getTakeTorch());
-		map.add(GoToCourtYard3C, getGoToCourtYard3C());
-		map.add(YouDie, getYouDie());
-		map.add(SwordBecomeKing, getSwordBecomeKing());
-		map.add(GoToCourtYard4C, getGoToCourtYard4C());
-		map.add(TorchBecomeKing, getTorchBecomeKing());
-		map.add(GuardsArrestYou, getGuardsArrestYou());
-		map.add(TakeSpellBook, getTakeSpellBook());
-		map.add(ReadSpellBook, getReadSpellBook());
-		map.add(GoToCourtYard2C, getGoToCourtYard2C());
-		map.add(NoSpellsGetArrested, getNoSpellsGetArrested());
-		map.add(GoodSpellsKingDies, getGoodSpellsKingDies());
+		map.add(NodeLabels.GreenBook.toString(), getGreenBook());
+		map.add(NodeLabels.GoToCamp.toString(), getGoToCamp());
+		map.add(NodeLabels.TakeSword.toString(), getTakeSword());
+		map.add(NodeLabels.GetArmour.toString(), getGetArmour());
+		map.add(NodeLabels.TakeTorch.toString(), getTakeTorch());
+		map.add(NodeLabels.GoToCourtYard3C.toString(), getGoToCourtYard3C());
+		map.add(NodeLabels.YouDie.toString(), getYouDie());
+		map.add(NodeLabels.SwordBecomeKing.toString(), getSwordBecomeKing());
+		map.add(NodeLabels.GoToCourtYard4C.toString(), getGoToCourtYard4C());
+		map.add(NodeLabels.TorchBecomeKing.toString(), getTorchBecomeKing());
+		map.add(NodeLabels.GuardsArrestYou.toString(), getGuardsArrestYou());
+		map.add(NodeLabels.TakeSpellBook.toString(), getTakeSpellBook());
+		map.add(NodeLabels.ReadSpellBook.toString(), getReadSpellBook());
+		map.add(NodeLabels.GoToCourtYard2C.toString(), getGoToCourtYard2C());
+		map.add(NodeLabels.NoSpellsGetArrested.toString(), getNoSpellsGetArrested());
+		map.add(NodeLabels.GoodSpellsKingDies.toString(), getGoodSpellsKingDies());
+		map.add(NodeLabels.EvilBook.toString(), getEvilBook());
+		map.add(NodeLabels.GoToAlchemyShop.toString(), getGoToAlchemyShop());
+		map.add(NodeLabels.BuyPoison.toString(), getBuyPoison());
+		map.add(NodeLabels.StudyEvilBook.toString(), getStudyEvilBook());
+		map.add(NodeLabels.GoToCourtYard1A.toString(), getGoToCourtYard1A());
+		map.add(NodeLabels.KingDrinksPoison.toString(), getKingDrinksPoison());
+		map.add(NodeLabels.KingKillsYou.toString(), getKingKillsYou());
+		map.add(NodeLabels.DrinkMakesWeak.toString(), getDrinkMakesWeak());
+		map.add(NodeLabels.GoToCourtYard2A.toString(), getGoToCourtYard2A());
+		map.add(NodeLabels.WeakFromPoisonDie.toString(), getWeakFromPoisonDie());
+		map.add(NodeLabels.WeakGetArrested.toString(), getWeakGetArrested());
+		map.add(NodeLabels.BuyPotion.toString(), getBuyPotion());
+		map.add(NodeLabels.DrinkGivesPowers.toString(), getDrinkGivesPowers());
+		map.add(NodeLabels.GoToCourtYard4A.toString(), getGoToCourtYard4A());
+		map.add(NodeLabels.PowersNotUsedGetArrested.toString(), getPowersNotUsedGetArrested());
+		map.add(NodeLabels.PowersBecomeKing.toString(), getPowersBecomeKing());
+		return map;
 	}
 
 	// testing1
