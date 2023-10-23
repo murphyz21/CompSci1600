@@ -1,5 +1,6 @@
 import com.actions.ActionSequence;
 import com.actions.Create;
+import com.actions.Exit;
 import com.actions.IAction;
 import com.actions.Position;
 import com.actions.SetCameraFocus;
@@ -87,14 +88,14 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
-		}
+	}
 	private ActionSequence getStart() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
-	private ActionSequence getCourtYard {
+	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Position(edith, courtYard));
@@ -102,6 +103,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(greenbook, courtYard, "Ground"));
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, courtYard, "Ground"));
+		sequence.add(new Exit(edith, courtYard.Gate, true));
 		return sequence;
 	}
 	private ActionSequence getGreenBook() {
