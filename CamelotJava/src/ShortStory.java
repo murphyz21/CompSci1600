@@ -102,9 +102,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(greenbook));
-		sequence.add(new Position(greenbook, courtYard, "Ground"));
+		sequence.add(new Position(greenbook, courtYard, "BigStall.Right"));
 		sequence.add(new Create<Item>(evilbook));
-		sequence.add(new Position(evilbook, courtYard, "Ground"));
+		sequence.add(new Position(evilbook, courtYard, "BigStall.Left"));
 		return sequence;
 	}
 	private ActionSequence getGreenBook() {
@@ -292,20 +292,20 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getEvilBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(courtYard));
-		sequence.add(new Position(edith, courtYard));
-		sequence.add(new Create<Item>(evilbook));
-		sequence.add(new Position(evilbook, courtYard, "Big Stall"));
+		sequence.add(new Take(edith, evilbook));
+		sequence.add(new Exit(edith, courtYard.getFurniture("gate"), true));
 		return sequence;
 	}
 
-
 	private ActionSequence getGoToAlchemyShop() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(alchemist));
 		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new Position(alchemist, alchemyShop));
+		sequence.add(new Create<Item>(greenPotion));
+		sequence.add(new Position(greenPotion, alchemyShop, "Bar.Left"));
+		sequence.add(new Create<Item>(bluePotion));
+		sequence.add(new Position(bluePotion, alchemyShop, "Bar.Right"));
 		return sequence;
 	}
 
