@@ -8,7 +8,7 @@ public abstract class Drink implements IAction{
 	}
 	
 	public String getName() {
-		return "drink";
+		return "Drink";
 	}
 	
 	public boolean getShouldWait() {
@@ -17,6 +17,6 @@ public abstract class Drink implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), drink.getName(drink));
+		return String.format("%s(%s)", getName(), drink);
 	}
 }

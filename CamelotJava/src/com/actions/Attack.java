@@ -2,7 +2,6 @@ package com.actions;
 
 public abstract class Attack implements IAction{
 	private Character attacker;
-
 	private Character enemy;
 	private Boolean bool = false;
 	
@@ -26,7 +25,7 @@ public abstract class Attack implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), attacker, enemy, bool);
+		return String.format("%s(%s, %s, %s)", getName(), attacker, enemy, bool.toString());
 	}
 }
-}
+

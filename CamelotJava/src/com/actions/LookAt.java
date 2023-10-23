@@ -4,21 +4,15 @@ import com.entities.IEntity;
 
 public class LookAt implements IAction{
 	private Character looker;
-	private Character target = null;
-	private IEntity ent = null;
+	private IEntity target = null;
 	
 	public LookAt(Character looker) {
 		this.looker = looker;
 	}
 	
-	public LookAt(Character looker, Character target) {
+	public LookAt(Character looker, IEntity target) {
 		this.looker = looker;
 		this.target = target;
-	}
-	
-	public LookAt(Character looker, IEntity ent) {
-		this.looker = looker;
-		this.ent = ent;
 	}
 	
 	public String getName() {
@@ -30,6 +24,6 @@ public class LookAt implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s)", getName(), looker.getName(looker));
+		return String.format("%s(%s, %s)", getName(), looker, target.toString());
 	}
 }

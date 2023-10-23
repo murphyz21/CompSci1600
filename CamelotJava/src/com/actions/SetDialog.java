@@ -16,6 +16,6 @@ public class SetDialog implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s)", getName(), line.getName());
+		return String.format("%s(%s)", getName(), line);
 	}
 }

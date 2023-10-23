@@ -28,6 +28,6 @@ public class Pickup implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s)", getName(), name.getName(name));
+		return String.format("%s(%s, %s, %s)", getName(), name, item.toString(), furn.toString());
 	}
 }

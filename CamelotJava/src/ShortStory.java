@@ -50,38 +50,37 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		campBegger2 = new Character(ThingNames.campBegger2.toString());
 		campBegger3 = new Character(ThingNames.campBegger3.toString());
 		
-		cYard2 = new Place(ThingNames.cYard2, Places.Courtyard);
+		cYard2 = new Place(ThingNames.cYard2.toString(), Places.Courtyard);
 		
-		sword = new Item(ThingNames.sword, Items.Sword);
-		helmet = new Item(ThingNames.helmet, Items.Helmet);
-		torch = new Item(ThingNames.torch, Items.LitTorch);
+		sword = new Item(ThingNames.Sword.toString(), Items.Sword);
+		helmet = new Item(ThingNames.Helmet.toString(), Items.Helmet);
+		torch = new Item(ThingNames.Torch.toString(), Items.LitTorch);
 		
-		cYard3 = new Place(ThingNames.cYard3, Places.Courtyard);
+		cYard3 = new Place(ThingNames.cYard3.toString(), Places.Courtyard);
 		
-		
-		cYard4 = new Place(ThingNames.cYard4, Places.Courtyard);
-		guard1 = new Character(ThingNames.guard1);
+		cYard4 = new Place(ThingNames.cYard4.toString(), Places.Courtyard);
+		guard1 = new Character(ThingNames.guard1.toString());
 		
 		//Right Side
-		evilbook = new Item(ThingNames.evilbook, Items.EvilBook);
-		alchemyShop = new Place(Thingnames.alchemyShop, Places.AlchemyShop);
-		alchemist - new Character(ThingNames.alchemist);
-		poison = new Item(ThingNames.poison, Items.GreenPotion);
+		evilbook = new Item(ThingNames.evilbook.toString(), Items.EvilBook);
+		alchemyShop = new Place(ThingNames.alchemyShop.toString(), Places.AlchemyShop);
+		alchemist = new Character(ThingNames.alchemist.toString());
+		poison = new Item(ThingNames.poison.toString(), Items.GreenPotion);
 		
-		cYard5 = new Place(ThingNames.cYard5, Places.Courtyard);
+		cYard5 = new Place(ThingNames.cYard5.toString(), Places.Courtyard);
 		
-		cYard6 = new Place(ThingNames.cYard6, Places.Courtyard);
-		guard2 = new Character(ThingNames.guard2);
+		cYard6 = new Place(ThingNames.cYard6.toString(), Places.Courtyard);
+		guard2 = new Character(ThingNames.guard2.toString());
 		
-		bluePotion = new Item(ThingNames.bluePotion, Items.BluePotion);
-		greenPotion = new Item(ThingNames.greenPotion, Items.GreenPotion);
-		cYard7 = new Place(ThingNames.cYard7, Places.Courtyard);
-		//Kathryn test comment
-		cYard8 = new Place(ThingNames.cYard8, Places.Courtyard);
-		guard3 = new Character(guard3);
+		bluePotion = new Item(ThingNames.bluePotion.toString(), Items.BluePotion);
+		greenPotion = new Item(ThingNames.greenPotion.toString(), Items.GreenPotion);
+		cYard7 = new Place(ThingNames.cYard7.toString(), Places.Courtyard);
+		
+		cYard8 = new Place(ThingNames.cYard8.toString(), Places.Courtyard);
+		guard3 = new Character(ThingNames.guard3.toString());
 	}
 	
-	private ActionSequence getInitSequence() {
+	private ActionSequence getInit() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Position(edith, courtYard));
@@ -89,6 +88,22 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowMenu(true));
 		return sequence;
 		}
+	private ActionSequence getStart() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Position(edith, courtYard));
+		return sequence;
+	}
+	private ActionSequence getCourtYard {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Position(edith, courtYard));
+		sequence.add(new Create<Item>(greenbook));
+		sequence.add(new Position(greenbook, courtYard, "Ground"));
+		sequence.add(new Create<Item>(evilbook));
+		sequence.add(new Position(evilbook, courtYard, "Ground"));
+		return sequence;
+	}
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
@@ -106,8 +121,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(sword, camp, "Ground"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
+
 		return sequence;
 	}
 	
@@ -120,8 +134,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(torch));
 		sequence.add(new Position(helmet, camp, "Ground"));
 		sequence.add(new Position(torch, camp, "Ground"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	private ActionSequence getGetArmour() {
@@ -131,8 +143,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(sword, camp, "InHand"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -143,8 +153,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(torch));
 		sequence.add(new Position(torch, camp, "InHand"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -158,8 +166,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(helmet, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -173,8 +179,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(helmet, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -188,8 +192,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(helmet, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -203,8 +205,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(torch, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -218,8 +218,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(torch, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -233,8 +231,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(torch, edith));
 		sequence.add(new Position(sword, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -246,8 +242,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(spellBook));
 		sequence.add(new Position(spellBook, camp, "HiddenBook"));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -258,8 +252,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(spellBook));
 		sequence.add(new Position(spellBook, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -272,8 +264,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(king, cYard1));
 		sequence.add(new Create<Item>(spellBook));
 		sequence.add(new Position(spellBook, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -286,8 +276,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(king, cYard1));
 		sequence.add(new Create<Item>(spellBook));
 		sequence.add(new Position(spellBook, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -300,8 +288,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(king, cYard1));
 		sequence.add(new Create<Item>(spellBook));
 		sequence.add(new Position(spellBook, edith));
-		sequence.add(new SetCameraFocus(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -312,7 +298,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, courtYard, "Big Stall"));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -322,7 +307,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -333,7 +317,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, alchemyShop));
 		sequence.add(new Create<Item>(greenPotion));
 		sequence.add(new Position(greenPotion, alchemyShop, "Bar"));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -342,7 +325,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -351,7 +333,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard5));
 		sequence.add(new Position(edith, cYard5));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 		
@@ -360,7 +341,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard5));
 		sequence.add(new Position(edith, cYard5));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -369,7 +349,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard5));
 		sequence.add(new Position(edith, cYard5));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -378,7 +357,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -387,7 +365,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard6));
 		sequence.add(new Position(edith, cYard6));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -396,7 +373,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard6));
 		sequence.add(new Position(edith, cYard6));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -405,7 +381,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard6));
 		sequence.add(new Position(edith, cYard6));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -416,7 +391,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, alchemyShop));
 		sequence.add(new Create<Item>(bluePotion));
 		sequence.add(new Position(bluePotion, alchemyShop, "Bar"));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 	 
@@ -425,7 +399,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -434,7 +407,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard8));
 		sequence.add(new Position(edith, cYard8));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -443,7 +415,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard8));
 		sequence.add(new Position(edith, cYard8));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -452,7 +423,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(edith));
 		sequence.add(new Create<Place>(cYard8));
 		sequence.add(new Position(edith, cYard8));
-		sequence.add(new SetCameraFocus(edith));
 		return sequence;
 	}
 
@@ -492,6 +462,4 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		map.add(NodeLabels.PowersBecomeKing.toString(), getPowersBecomeKing());
 		return map;
 	}
-
-	// testing1
 }

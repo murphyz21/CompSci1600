@@ -1,7 +1,5 @@
 package com.actions;
 
-import java.util.ArrayList;
-
 public abstract class Cast implements IAction{
 	private Character caster;
 	private Character target = null;
@@ -23,7 +21,7 @@ public abstract class Cast implements IAction{
 	}
 	
 	public String getName() {
-		return "cast";
+		return "Cast";
 	}
 	
 	public boolean getShouldWait() {
@@ -32,6 +30,6 @@ public abstract class Cast implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), caster.getName(caster));
+		return String.format("%s(%s, %s, %s)", getName(), caster, target, color.toString());
 	}
 }

@@ -23,6 +23,6 @@ public abstract class Give implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), giver.getName(giver));
+		return String.format("%s(%s, %s, %s)", getName(), giver, potion, receiver);
 	}
 }
