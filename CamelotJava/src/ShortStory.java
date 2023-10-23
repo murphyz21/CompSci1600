@@ -80,6 +80,14 @@ public class ShortStory implements IStory{
 		guard3 = new Character(ThingNames.guard3);
 	}
 	
+	private ActionSequence getInitSequence() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Position(edith, courtYard));
+		sequence.add(new SetCameraFocus(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+		}
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
