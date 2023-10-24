@@ -1,6 +1,7 @@
 package com.actions;
 
 import com.entities.IEntity;
+import com.entities.Character;
 
 public class LookAt implements IAction{
 	private Character looker;

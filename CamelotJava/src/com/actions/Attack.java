@@ -1,5 +1,7 @@
 package com.actions;
 
+import com.entities.Character;
+
 public class Attack implements IAction{
 	private Character attacker;
 	private Character enemy;
