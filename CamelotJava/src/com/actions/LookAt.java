@@ -1,7 +1,11 @@
 package com.actions;
 
 import com.entities.IEntity;
+<<<<<<< HEAD
 import com.entities.Item;
+=======
+import com.entities.Character;
+>>>>>>> branch 'main' of https://github.com/murphyz21/CompSci1600.git
 
 public class LookAt implements IAction{
 	private Character looker;

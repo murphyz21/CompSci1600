@@ -1,5 +1,7 @@
 package com.actions;
 
+import com.entities.Character;
+
 public class Dance implements IAction{
 	private Character name;
 	

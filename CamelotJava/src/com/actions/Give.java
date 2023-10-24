@@ -1,8 +1,9 @@
 package com.actions;
 
 import com.entities.Item;
+import com.entities.Character;
 
-public abstract class Give implements IAction{
+public class Give implements IAction{
 	private Character giver;
 	private Character receiver;
 	private Item potion;

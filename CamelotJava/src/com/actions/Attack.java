@@ -1,6 +1,8 @@
 package com.actions;
 
-public abstract class Attack implements IAction{
+import com.entities.Character;
+
+public class Attack implements IAction{
 	private Character attacker;
 	private Character enemy;
 	private Boolean bool = false;

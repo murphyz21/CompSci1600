@@ -1,6 +1,8 @@
 package com.actions;
 
-public abstract class Drink implements IAction{
+import com.entities.Character;
+
+public class Drink implements IAction{
 	private Character drink;
 	
 	public Drink(Character drink) {
