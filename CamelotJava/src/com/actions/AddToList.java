@@ -1,13 +1,13 @@
 package com.actions;
 
-import javax.swing.text.html.parser.Entity;
+import com.entities.Item;
 
 public class AddToList implements IAction{
-	private Entity entity;
+	private Item item;
 	private String descrip;
 	
-	public AddToList(Entity entity, String descrip) {
-		this.entity = entity;
+	public AddToList(Item item, String descrip) {
+		this.item = item;
 		this.descrip = descrip;
 	}
 	
@@ -20,6 +20,6 @@ public class AddToList implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s, %s)", getName(), entity, descrip);
+		return String.format("%s(%s, %s)", getName(), item, descrip);
 	}
 }

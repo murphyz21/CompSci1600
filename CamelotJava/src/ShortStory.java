@@ -1,10 +1,17 @@
 import com.actions.ActionSequence;
+import com.actions.AddToList;
+import com.actions.Attack;
 import com.actions.Create;
+import com.actions.Dance;
+import com.actions.Die;
+import com.actions.Draw;
 import com.actions.Exit;
 import com.actions.IAction;
 import com.actions.Pickup;
 import com.actions.Position;
+import com.actions.PutDown;
 import com.actions.SetCameraFocus;
+import com.actions.SetDialog;
 import com.actions.ShowMenu;
 import com.actions.Take;
 import com.entities.Item.Items;
@@ -19,7 +26,7 @@ import com.entities.Character;
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
 	com.entities.Character edith;
-	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
+	private Character guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
 	
@@ -110,6 +117,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, greenbook));
+		sequence.add(new AddToList(greenbook, "this is the greenbook!"));
 		sequence.add(new Exit(edith, courtYard.getFurniture("gate"), true));
 		return sequence;
 	}
@@ -120,77 +128,67 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Position(sword, camp, "Log"));
-
 		return sequence;
 	}
 	
 	private ActionSequence getTakeSword() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(camp));
-		sequence.add(new Position(edith, camp));
+		sequence.add(new Take(edith, sword));
+		sequence.add(new AddToList(sword, "this is your amazing sword!"));
 		sequence.add(new Create<Item>(helmet));
 		sequence.add(new Create<Item>(torch));
-		sequence.add(new Position(helmet, camp, "Ground"));
-		sequence.add(new Position(torch, camp, "Ground"));
+		sequence.add(new Position(helmet, camp, "Barrel"));
+		sequence.add(new Position(torch, camp, "Stall"));
 		return sequence;
 	}
 	private ActionSequence getGetArmour() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(camp));
-		sequence.add(new Position(edith, camp));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(sword, camp, "InHand"));
+		sequence.add(new Take(edith, helmet));
+		sequence.add(new AddToList(helmet, "this is your helmet!"));
+		sequence.add(new Exit(edith, camp.getFurniture("gate"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getTakeTorch() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(camp));
-		sequence.add(new Position(edith, camp));
-		sequence.add(new Create<Item>(torch));
-		sequence.add(new Position(torch, camp, "InHand"));
+		sequence.add(new Take(edith, torch));
+		sequence.add(new AddToList(torch, "this is your torch!"));
+		sequence.add(new Exit(edith, camp.getFurniture("gate"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCourtYard3C() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
 		sequence.add(new Create<Place>(cYard2));
 		sequence.add(new Position(edith, cYard2));
-		sequence.add(new Create<Item>(helmet));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(helmet, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, cYard2));
+		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
+		sequence.add(new SetDialog("I've come to kill you!"));
+		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please!"));
 		return sequence;
 	}
 	
 	private ActionSequence getYouDie() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard2));
-		sequence.add(new Position(edith, cYard2));
-		sequence.add(new Create<Item>(helmet));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(helmet, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.add(new SetDialog("Ok King Nikos, I will put down my sword..."));
+		sequence.add(new PutDown(edith, sword));
+		sequence.add(new Pickup(king, sword));
+		sequence.add(new Attack(king, edith, false));
+		sequence.add(new Die(edith));
+		sequence.add(new Dance(king));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
 	private ActionSequence getSwordBecomeKing() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard2));
-		sequence.add(new Position(edith, cYard2));
-		sequence.add(new Create<Item>(helmet));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(helmet, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.add(new SetDialog("Liar!!!!"));
+		sequence.add(new Draw(edith, sword));
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Die(king));
+		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
