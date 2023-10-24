@@ -206,27 +206,30 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getTorchBecomeKing() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard3));
-		sequence.add(new Position(edith, cYard3));
-		sequence.add(new Create<Item>(torch));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(torch, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.add(new SetDialog("It's too late for apologies!"));
+		sequence.add(new Draw(edith, torch));
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Die(king));
+		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
 	private ActionSequence getGuardsArrestYou() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard3));
-		sequence.add(new Position(edith, cYard3));
-		sequence.add(new Create<Item>(torch));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(torch, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.add(new SetDialog("It's too late for apologies!"));
+		sequence.add(new SetDialog("Guards come quick!"));
+		sequence.combineWith(new CharacterCreation(guard1));
+		sequence.add(new Position(guard1, courtYard));
+		sequence.combineWith(new CharacterCreation(guard2));
+		sequence.add(new Position(guard2, courtYard));
+		sequence.combineWith(new CharacterCreation(guard3));
+		sequence.add(new Position(guard3, courtYard));
+		sequence.add(new Draw(edith, torch));
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Die(king));
+		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
