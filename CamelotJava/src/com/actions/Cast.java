@@ -1,6 +1,8 @@
 package com.actions;
 
-public abstract class Cast implements IAction{
+import com.entities.Character;
+
+public class Cast implements IAction{
 	private Character caster;
 	private Character target = null;
 	private String color = "red";
