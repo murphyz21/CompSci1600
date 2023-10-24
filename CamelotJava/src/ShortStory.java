@@ -1,12 +1,16 @@
 import com.actions.ActionSequence;
 import com.actions.AddToList;
 import com.actions.Attack;
+import com.actions.Cast;
 import com.actions.Create;
 import com.actions.Dance;
 import com.actions.Die;
 import com.actions.Draw;
+import com.actions.Drink;
 import com.actions.Exit;
+import com.actions.Give;
 import com.actions.IAction;
+import com.actions.LookAt;
 import com.actions.Pickup;
 import com.actions.Position;
 import com.actions.PutDown;
@@ -107,6 +111,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
+		sequence.combineWith(new CharacterCreation(guard1));
+		sequence.combineWith(new CharacterCreation(guard2));
+		sequence.combineWith(new CharacterCreation(guard3));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(guard1, courtYard));
+		sequence.add(new Position(guard2, courtYard));
+		sequence.add(new Position(guard3, courtYard));
 		sequence.add(new Position(edith, courtYard));
 		sequence.add(new Create<Item>(greenbook));
 		sequence.add(new Position(greenbook, courtYard, "BigStall.Right"));
@@ -219,12 +230,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new SetDialog("It's too late for apologies!"));
 		sequence.add(new SetDialog("Guards come quick!"));
-		sequence.combineWith(new CharacterCreation(guard1));
-		sequence.add(new Position(guard1, courtYard));
-		sequence.combineWith(new CharacterCreation(guard2));
-		sequence.add(new Position(guard2, courtYard));
-		sequence.combineWith(new CharacterCreation(guard3));
-		sequence.add(new Position(guard3, courtYard));
 		sequence.add(new Draw(edith, torch));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
@@ -302,6 +307,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(alchemist));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(alchemist, alchemyShop));
+		sequence.add(new Position(edith, alchemyShop));
 		sequence.add(new Create<Item>(greenPotion));
 		sequence.add(new Position(greenPotion, alchemyShop, "Bar.Left"));
 		sequence.add(new Create<Item>(bluePotion));
@@ -311,117 +317,91 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	private ActionSequence getBuyPoison() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new Create<Item>(greenPotion));
-		sequence.add(new Position(greenPotion, alchemyShop, "Bar"));
+		sequence.add(new Take(edith, greenPotion, alchemyShop.getFurniture("Bar.Left")));
 		return sequence;
 	}
 
 	private ActionSequence getStudyEvilBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new LookAt(edith, evilbook));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard1A() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard5));
-		sequence.add(new Position(edith, cYard5));
+		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 		
 	private ActionSequence getKingDrinksPoison() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard5));
-		sequence.add(new Position(edith, cYard5));
+		sequence.add(new SetDialog("String"));
+		sequence.add(new Give(edith, greenPotion, king));
+		sequence.add(new Drink(king));
+		sequence.add(new Dance(edith));
 		return sequence;
 	}
 
 	private ActionSequence getKingKillsYou() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard5));
-		sequence.add(new Position(edith, cYard5));
+		sequence.add(new Cast(edith, king, "purple"));
 		return sequence;
 	}
 
 	private ActionSequence getDrinkMakesWeak() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new Drink(edith));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard2A() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard6));
-		sequence.add(new Position(edith, cYard6));
+		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 
 	private ActionSequence getWeakFromPoisonDie() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard6));
-		sequence.add(new Position(edith, cYard6));
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Die(edith));
 		return sequence;
 	}
 
 	private ActionSequence getWeakGetArrested() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard6));
-		sequence.add(new Position(edith, cYard6));
+		
 		return sequence;
 	}
 
 	private ActionSequence getBuyPotion() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
-		sequence.add(new Create<Item>(bluePotion));
-		sequence.add(new Position(bluePotion, alchemyShop, "Bar"));
+		sequence.add(new Take(edith, bluePotion, alchemyShop.getFurniture("Bar.Right")));
 		return sequence;
 	}
 	 
 	private ActionSequence getDrinkGivesPowers() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(alchemyShop));
-		sequence.add(new Position(edith, alchemyShop));
+		sequence.add(new Drink(edith));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard4A() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard8));
-		sequence.add(new Position(edith, cYard8));
+		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 
 	private ActionSequence getPowersNotUsedGetArrested() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard8));
-		sequence.add(new Position(edith, cYard8));
+		sequence.add(new Attack(edith, king, false));
 		return sequence;
 	}
 
 	private ActionSequence getPowersBecomeKing() { 
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(cYard8));
-		sequence.add(new Position(edith, cYard8));
+		sequence.add(new Cast(edith, king, "blue"));
+		sequence.add(new Die(king));
+		sequence.add(new Dance(edith));
 		return sequence;
 	}
 
