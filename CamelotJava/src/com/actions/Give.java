@@ -14,7 +14,7 @@ public abstract class Give implements IAction{
 	}
 	
 	public String getName() {
-		return "give";
+		return "Give";
 	}
 	
 	public boolean getShouldWait() {
@@ -23,6 +23,6 @@ public abstract class Give implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s, %s, %s)", getName(), giver, potion, receiver);
+		return String.format("%s(%s, %s, %s)", getName(), giver, potion,toString(), receiver);
 	}
 }

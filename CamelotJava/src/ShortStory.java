@@ -10,6 +10,7 @@ import com.actions.Drink;
 import com.actions.Exit;
 import com.actions.Give;
 import com.actions.IAction;
+import com.actions.Kneel;
 import com.actions.LookAt;
 import com.actions.Pickup;
 import com.actions.Position;
@@ -187,6 +188,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Pickup(king, sword, ));
 		sequence.add(new Attack(king, edith, false));
 		sequence.add(new Die(edith));
+		sequence.add(new SetDialog("Begon Peasant, now I will rull forever and ever! hahahaha!"));
 		sequence.add(new Dance(king));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -198,6 +200,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Draw(edith, sword));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
+		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
 		sequence.add(new Dance(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -221,6 +224,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Draw(edith, torch));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
+		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
 		sequence.add(new Dance(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -233,7 +237,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Draw(edith, torch));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
-		sequence.add(new Dance(edith));
+		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
+		sequence.add(new Dance(guard1));
+		sequence.add(new Dance(guard2));
+		sequence.add(new Dance(guard3));
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
@@ -241,57 +248,55 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	//New Branch
 	private ActionSequence getTakeSpellBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(camp));
-		sequence.add(new Position(edith, camp));
 		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, camp, "HiddenBook"));
+		sequence.add(new Position(spellBook, camp, "Chest"));
+		sequence.add(new Take(edith, spellBook));
+		sequence.add(new AddToList(spellBook, "spellbook!"));
 		return sequence;
 	}
 	
 	private ActionSequence getReadSpellBook() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Create<Place>(camp));
-		sequence.add(new Position(edith, camp));
-		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, edith));
+		sequence.add(new LookAt(edith, spellBook));
+		sequence.add(new Exit(edith, camp.getFurniture("gate"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCourtYard2C() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(courtYard));
+		sequence.add(new Position(edith, courtYard));
 		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard1));
-		sequence.add(new Position(edith, cYard1));
-		sequence.add(new Position(king, cYard1));
-		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, edith));
+		sequence.add(new Position(king, courtYard));
+		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
+		sequence.add(new SetDialog("I've come to kill you with my spells!!!"));
+		sequence.add(new SetDialog("I will make things fair I promise! Don't cast a spell on me please, I beg you!"));
 		return sequence;
 	}
 	
 	private ActionSequence getNoSpellsGetArrested() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard1));
-		sequence.add(new Position(edith, cYard1));
-		sequence.add(new Position(king, cYard1));
-		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetDialog("It's too late for apologies! I cast you away King Nikos!"));
+		sequence.add(new Cast(edith, king, "purple"));
+		sequence.add(new Kneel(king));
+		sequence.add(new SetDialog("Oww! Guards, arrest that heathen!!!"));
+		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
+		sequence.add(new Dance(king));
+		sequence.add(new Dance(guard1));
+		sequence.add(new Dance(guard2));
+		sequence.add(new Dance(guard3));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoodSpellsKingDies() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard1));
-		sequence.add(new Position(edith, cYard1));
-		sequence.add(new Position(king, cYard1));
-		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, edith));
+		sequence.add(new SetDialog("It's too late for apologies! I cast you away King Nikos!"));
+		sequence.add(new Cast(edith, king, "red"));
+		sequence.add(new Die(king));
+		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -335,7 +340,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		
 	private ActionSequence getKingDrinksPoison() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("String"));
+		sequence.add(new SetDialog("King Nikos, we got you a special potion to make you live forever! Drink up!"));
 		sequence.add(new Give(edith, greenPotion, king));
 		sequence.add(new Drink(king));
 		sequence.add(new Dance(edith));

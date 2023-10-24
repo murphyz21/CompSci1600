@@ -1,17 +1,18 @@
 package com.actions;
 
 import com.entities.IEntity;
+import com.entities.Item;
 
 public class LookAt implements IAction{
 	private Character looker;
-	private IEntity target = null;
+	private Item target;
 	
 	public LookAt(Character looker) {
 		this.looker = looker;
 	}
 	
-	public LookAt(Character looker, IEntity target) {
-		this.looker = looker;
+	public LookAt(Character name, Item target) {
+		this.looker = name;
 		this.target = target;
 	}
 	
