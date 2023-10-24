@@ -26,7 +26,7 @@ import com.entities.Character;
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
 	com.entities.Character edith;
-	private Character guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
+	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place startCyard,camp, cYard1, cYard2, cYard3, cYard4, alchemyShop,cYard5, cYard6, cYard7, cYard8, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, poison, bluePotion, greenPotion;
 	
@@ -159,10 +159,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getGoToCourtYard3C() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Place>(cYard2));
-		sequence.add(new Position(edith, cYard2));
+		sequence.add(new Create<Place>(courtYard));
+		sequence.add(new Position(edith, courtYard));
 		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Position(king, cYard2));
+		sequence.add(new Position(king, courtYard));
 		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
 		sequence.add(new SetDialog("I've come to kill you!"));
 		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please!"));
@@ -173,7 +173,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new SetDialog("Ok King Nikos, I will put down my sword..."));
 		sequence.add(new PutDown(edith, sword));
-		sequence.add(new Pickup(king, sword));
+		sequence.add(new Pickup(king, sword, ));
 		sequence.add(new Attack(king, edith, false));
 		sequence.add(new Die(edith));
 		sequence.add(new Dance(king));
@@ -194,14 +194,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getGoToCourtYard4C() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
+		sequence.add(new Create<Place>(courtYard));
+		sequence.add(new Position(edith, courtYard));
 		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Create<Place>(cYard3));
-		sequence.add(new Position(edith, cYard3));
-		sequence.add(new Create<Item>(torch));
-		sequence.add(new Create<Item>(sword));
-		sequence.add(new Position(torch, edith));
-		sequence.add(new Position(sword, edith));
+		sequence.add(new Position(king, courtYard));
+		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
+		sequence.add(new SetDialog("I've come to kill you and burn this dang castle to the ground!!!"));
+		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please, I beg you!"));
 		return sequence;
 	}
 	
