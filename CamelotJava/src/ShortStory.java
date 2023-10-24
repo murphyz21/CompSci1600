@@ -324,7 +324,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getBuyPoison() {
 		var sequence = new ActionSequence();
 		sequence.add(new SetDialog("Mr. Alchemist I'm on a revolution to kill the king, what potion should I choose?"));
-		sequence.add(new SetDialog("Ayyy hurrah, Take the green one little lassy."));
+		sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
 		sequence.add(new Take(edith, greenPotion, alchemyShop.getFurniture("Bar.Left")));
 		sequence.add(new AddToList(greenPotion, "this is the green potion!"));
 		return sequence;
@@ -333,12 +333,14 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getStudyEvilBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new LookAt(edith, evilbook));
-
+		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard1A() {
 		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, courtYard));
 		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
@@ -349,7 +351,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Give(edith, greenPotion, king));
 		sequence.add(new Drink(king));
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new Die(king));
 		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 
@@ -358,69 +362,98 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetDialog("I've come to kill you with my spells!!!"));
 		sequence.add(new Cast(edith, king, "purple"));
 		sequence.add(new SetDialog("I'm not going down without a fight!"));
-		sequence.add(new Cast(edith, king, "blue"));)
+		sequence.add(new Cast(edith, king, "blue"));
 		sequence.add(new Die(edith));
 		sequence.add(new SetDialog("Begon Peasant, now I will rull forever and ever! hahahaha!"));
 		sequence.add(new Dance(king));
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(guard2));
 		sequence.add(new Dance(guard3));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 
 	private ActionSequence getDrinkMakesWeak() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("I hope this potion makes me strong so I can defear the evil King Nikos!"));
+		sequence.add(new SetDialog("I hope this potion makes me strong so I can defeat the evil King Nikos!"));
 		sequence.add(new Drink(edith));
-		sequence.add(new Exit());
+		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard2A() {
 		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, courtYard));
 		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 
 	private ActionSequence getWeakFromPoisonDie() {
 		var sequence = new ActionSequence();
+		sequence.add(new SetDialog("King Nikos, I've come to take the throne!"));
 		sequence.add(new Attack(edith, king, false));
+		sequence.add(new SetDialog("Oh dear, I'm feeling rather weak"));
 		sequence.add(new Die(edith));
+		sequence.add(new Dance(king));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 
 	private ActionSequence getWeakGetArrested() {
 		var sequence = new ActionSequence();
-		
+		sequence.add(new SetDialog("King Nikos, watch out! I've come to kill you with my spells"));
+		sequence.add(new Cast(edith, king, "red"));
+		sequence.add(new SetDialog("Nice try peasant, your spells don't work! Arrest her immediately guards!"));
+		sequence.add(new Dance(king));
+		sequence.add(new Dance(guard1));
+		sequence.add(new Dance(guard2));
+		sequence.add(new Dance(guard3));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 
 	private ActionSequence getBuyPotion() {
 		var sequence = new ActionSequence();
+		sequence.add(new SetDialog("Mr. Alchemist I'm on a revolution to kill the king, what potion should I choose?"));
+		sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
 		sequence.add(new Take(edith, bluePotion, alchemyShop.getFurniture("Bar.Right")));
+		sequence.add(new AddToList(bluePotion, "this is the blue potion!"));
 		return sequence;
 	}
 	 
 	private ActionSequence getDrinkGivesPowers() {
 		var sequence = new ActionSequence();
 		sequence.add(new Drink(edith));
+		sequence.add(new SetDialog("Wow, this potion gave me so many new powers!"));
+		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 
 	private ActionSequence getGoToCourtYard4A() {
 		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, courtYard));
 		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 
 	private ActionSequence getPowersNotUsedGetArrested() {
 		var sequence = new ActionSequence();
+		sequence.add(new SetDialog("King Nikos, I don't want to kill you with my powers, you must surrender your throne!"));
+		sequence.add(new SetDialog("I will never back down!"));
 		sequence.add(new Attack(edith, king, false));
+		sequence.add(new SetDialog("You should've used your powers! Arrest her immediately guards!"));
+		sequence.add(new Dance(guard1));
+		sequence.add(new Dance(guard2));
+		sequence.add(new Dance(guard3));
+		sequence.add(new Dance(king));
 		return sequence;
 	}
 
 	private ActionSequence getPowersBecomeKing() { 
 		var sequence = new ActionSequence();
+		sequence.add(new SetDialog("This is revenge King Nikos!"));
 		sequence.add(new Cast(edith, king, "blue"));
 		sequence.add(new Die(king));
 		sequence.add(new Dance(edith));
