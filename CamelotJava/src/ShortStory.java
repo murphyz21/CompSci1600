@@ -9,14 +9,18 @@ import com.actions.Draw;
 import com.actions.Drink;
 import com.actions.Exit;
 import com.actions.Give;
+import com.actions.HideDialog;
+import com.actions.HideList;
 import com.actions.IAction;
 import com.actions.Kneel;
 import com.actions.LookAt;
 import com.actions.Pickup;
+import com.actions.Pocket;
 import com.actions.Position;
 import com.actions.PutDown;
 import com.actions.SetCameraFocus;
 import com.actions.SetDialog;
+import com.actions.ShowList;
 import com.actions.ShowMenu;
 import com.actions.Take;
 import com.entities.Item.Items;
@@ -113,7 +117,11 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getGreenBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, greenbook));
-		sequence.add(new AddToList(greenbook, "this is the greenbook!"));
+		sequence.add(new LookAt(edith, greenbook));
+		sequence.add(new SetDialog("This is a Fortune Book! Go to the camp Edith for your next adventure!"));
+		sequence.add(new HideDialog());
+		sequence.add(new LookAt());
+		sequence.add(new Pocket(edith, greenbook));
 		sequence.add(new Exit(edith, courtYard.getFurniture("Gate"), true));
 		return sequence;
 	}
@@ -136,7 +144,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getTakeSword() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, sword));
-		sequence.add(new AddToList(sword, "this is your amazing sword!"));
 		sequence.add(new Create<Item>(helmet));
 		sequence.add(new Create<Item>(torch));
 		sequence.add(new Position(helmet, camp, "Barrel"));
@@ -146,7 +153,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getGetArmour() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, helmet));
-		sequence.add(new AddToList(helmet, "this is your helmet!"));
 		sequence.add(new Exit(edith, camp.getFurniture("gate"), true));
 		return sequence;
 	}
@@ -154,7 +160,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getTakeTorch() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, torch));
-		sequence.add(new AddToList(torch, "this is your torch!"));
 		sequence.add(new Exit(edith, camp.getFurniture("Gate"), true));
 		return sequence;
 	}
