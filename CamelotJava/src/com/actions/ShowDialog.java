@@ -1,6 +1,7 @@
 package com.actions;
 
 public class ShowDialog implements IAction{
+	
 	public String getName() {
 		return "ShowDialog";
 	}
