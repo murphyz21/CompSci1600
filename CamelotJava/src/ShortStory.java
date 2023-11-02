@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 import com.actions.ActionSequence;
 import com.actions.AddToList;
 import com.actions.Attack;
@@ -7,6 +9,7 @@ import com.actions.Dance;
 import com.actions.Die;
 import com.actions.Draw;
 import com.actions.Drink;
+import com.actions.Enter;
 import com.actions.Exit;
 import com.actions.Give;
 import com.actions.HideDialog;
@@ -19,6 +22,7 @@ import com.actions.Position;
 import com.actions.PutDown;
 import com.actions.SetCameraFocus;
 import com.actions.SetDialog;
+import com.actions.ShowDialog;
 import com.actions.ShowMenu;
 import com.actions.Take;
 import com.entities.Item.Items;
@@ -37,6 +41,14 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private Place camp, alchemyShop, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, bluePotion, greenPotion;
 	
+	public enum Cnames{Edith, King, Guard1, Guard3, Guard2, Alchemist, CampBegger1, CampBegger2, CampBegger3}
+	public enum Pnames{Camp, AlchemyShop, Courtyard}
+	public enum Inames{GreenBook, SpellBook, Sword, Helmet, Torch, Evilbook, BluePotion, GreenPotion}
+	HashMap<Cnames, Character> clist = new HashMap<>();
+	HashMap<Pnames, Place> plist = new HashMap<>();
+	HashMap<Inames, Item> ilist = new HashMap<>();
+		
+	
 	
 	private enum NodeLabels {
 		Init, Start, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
@@ -46,10 +58,35 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	}
 	
 	public INode getRoot() {
-		return new Node("root");
+		clist.get(Cnames.Edith);
+		
+		
 	}
 	
 	public void getThings() {
+		clist.put(Cnames.Edith, new Character(Cnames.Edith.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.King, new Character(Cnames.King.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.Guard1, new Character(Cnames.Guard1.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.Guard2, new Character(Cnames.Guard2.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.Guard3, new Character(Cnames.Guard3.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.Alchemist, new Character(Cnames.Alchemist.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.CampBegger1, new Character(Cnames.CampBegger1.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.CampBegger2, new Character(Cnames.CampBegger2.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		clist.put(Cnames.CampBegger3, new Character(Cnames.CampBegger3.toString(), Character.BodyTypes.D, Character.Clothing.Peasant));
+		
+		plist.put(Pnames.Camp, new Place(Pnames.Camp.toString(), Place.Places.Camp));
+		plist.put(Pnames.AlchemyShop, new Place(Pnames.AlchemyShop.toString(), Place.Places.AlchemyShop));
+		plist.put(Pnames.Courtyard, new Place(Pnames.Courtyard.toString(), Place.Places.Courtyard));
+		
+		ilist.put(Inames.Sword, new Item(Inames.Sword.toString(), Item.Items.Sword));
+		ilist.put(Inames.GreenBook, new Item(Inames.GreenBook.toString(), Item.Items.GreenBook));
+		ilist.put(Inames.SpellBook, new Item(Inames.SpellBook.toString(), Item.Items.SpellBook));
+		ilist.put(Inames.Helmet, new Item(Inames.Helmet.toString(), Item.Items.Helmet));
+		ilist.put(Inames.Torch, new Item(Inames.Torch.toString(), Item.Items.Torch));
+		ilist.put(Inames.Evilbook, new Item(Inames.Evilbook.toString(), Item.Items.EvilBook));
+		ilist.put(Inames.BluePotion, new Item(Inames.BluePotion.toString(), Item.Items.BluePotion));
+		ilist.put(Inames.GreenPotion, new Item(Inames.GreenPotion.toString(), Item.Items.GreenPotion));
+		
 		//Start
 		edith = new Character(ThingNames.Edith.toString());
 		greenbook = new Item(ThingNames.greenbook.toString(), Items.GreenBook);
@@ -92,16 +129,16 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	}
 	private ActionSequence getStart() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
+		var edith = clist.get(Cnames.Edith);
+		var courtYard = plist.get(Pnames.Courtyard);
 		sequence.add(new Position(edith, courtYard));
 		return sequence;
 	}
 	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.combineWith(new CharacterCreation(guard1));
-		sequence.combineWith(new CharacterCreation(guard2));
-		sequence.combineWith(new CharacterCreation(guard3));
+		var guard1 = clist.get(Cnames.Guard1);
+		var guard2 = clist.get(Cnames.Guard2);
+		var guard3 = clist.get(Cnames.Guard3);
 		sequence.add(new Position(guard1, courtYard));
 		sequence.add(new Position(guard2, courtYard));
 		sequence.add(new Position(guard3, courtYard));
@@ -117,24 +154,26 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Take(edith, greenbook));
 		sequence.add(new LookAt(edith, greenbook));
 		sequence.add(new SetDialog("This is a Fortune Book! Go to the camp Edith for your next adventure!"));
-		sequence.add(new HideDialog());
+		sequence.add(new ShowDialog());
 		sequence.add(new LookAt());
 		sequence.add(new Pocket(edith, greenbook));
+		sequence.add(new HideDialog());
 		sequence.add(new Exit(edith, courtYard.getFurniture("Gate"), true));
+		sequence.add(new Enter(edith, camp.getFurniture("Door"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCamp() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Place>(camp));
-		sequence.combineWith(new CharacterCreation(campBegger1));
-		sequence.combineWith(new CharacterCreation(campBegger2));
-		sequence.combineWith(new CharacterCreation(campBegger3));
+		camp = plist.get(Pnames.Camp);
+		campBegger1 = clist.get(Cnames.CampBegger1);
+		campBegger2 = clist.get(Cnames.CampBegger2);
+		campBegger3 = clist.get(Cnames.CampBegger3);
 		sequence.add(new Position(campBegger1, camp));
 		sequence.add(new Position(campBegger2, camp));
 		sequence.add(new Position(campBegger3, camp));
 		sequence.add(new Position(edith, camp));
-		sequence.add(new Create<Item>(sword));
+		sword = ilist.get(Inames.Sword);
 		sequence.add(new Position(sword, camp, "Log"));
 		return sequence;
 	}
@@ -142,8 +181,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getTakeSword() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, sword));
-		sequence.add(new Create<Item>(helmet));
-		sequence.add(new Create<Item>(torch));
+		helmet = ilist.get(Inames.Helmet);
+		torch = ilist.get(Inames.Torch);
 		sequence.add(new Position(helmet, camp, "Barrel"));
 		sequence.add(new Position(torch, camp, "Stall"));
 		return sequence;
@@ -151,7 +190,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getGetArmour() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, helmet));
-		sequence.add(new Exit(edith, camp.getFurniture("gate"), true));
+		sequence.add(new Exit(edith, camp.getFurniture("Gate"), true));
+		sequence.add(new Enter(edith, courtYard,getFurniture("Door"), true));
 		return sequence;
 	}
 	
@@ -159,18 +199,19 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, torch));
 		sequence.add(new Exit(edith, camp.getFurniture("Gate"), true));
+		sequence.add(new Enter(edith, courtYard,getFurniture("Door"), true));
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCourtYard3C() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Place>(courtYard));
 		sequence.add(new Position(edith, courtYard));
-		sequence.combineWith(new CharacterCreation(king));
+		king = new clist.get(Cnames.King);
 		sequence.add(new Position(king, courtYard));
 		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
 		sequence.add(new SetDialog("I've come to kill you!"));
 		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please!"));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 	
@@ -183,6 +224,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Die(edith));
 		sequence.add(new SetDialog("Begon Peasant, now I will rull forever and ever! hahahaha!"));
 		sequence.add(new Dance(king));
+		sequence.add(new HideDialog());
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
@@ -194,6 +236,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -201,13 +244,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getGoToCourtYard4C() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Place>(courtYard));
 		sequence.add(new Position(edith, courtYard));
-		sequence.combineWith(new CharacterCreation(king));
+		king = new clist.get(Cnames.King);
 		sequence.add(new Position(king, courtYard));
 		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
 		sequence.add(new SetDialog("I've come to kill you and burn this dang castle to the ground!!!"));
 		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please, I beg you!"));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 	
@@ -218,6 +261,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -234,6 +278,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(guard2));
 		sequence.add(new Dance(guard3));
+		sequence.add(new Dance(edith));
+		sequence.add(new HideDialog());
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
@@ -241,10 +287,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	//New Branch
 	private ActionSequence getTakeSpellBook() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Item>(spellBook));
+		spellBook = ilist.get(Inames.SpellBook);
 		sequence.add(new Position(spellBook, camp, "Chest"));
 		sequence.add(new Take(edith, spellBook));
-		sequence.add(new AddToList(spellBook, "spellbook!"));
+		//sequence.add(new AddToList(spellBook, "spellbook!"));
 		return sequence;
 	}
 	
