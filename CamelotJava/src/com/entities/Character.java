@@ -1,5 +1,7 @@
 package com.entities;
 
+import com.entities.Things.ThingNames;
+
 public class Character implements IEntity, IThing<com.entities.Character.BodyTypes> {
 	private String characterName;
 	private BodyTypes bodyType;
@@ -7,7 +9,7 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 	private HairStyle hairStyle;
 	
 	
-	enum BodyTypes {
+	public enum BodyTypes {
 		A, 
 		B, 
 		C, 
@@ -17,7 +19,7 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 		G, 
 		H;
 	}
-	enum Clothing {
+	public enum Clothing {
 		Bandit, 
 		Beggar, 
 		LightArmour, 
@@ -28,7 +30,7 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 		Priest;
 	}
 	
-	enum HairStyle {
+	public enum HairStyle {
 		Long, 
 		Spiky, 
 		Short;
@@ -56,12 +58,13 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 		this.hairStyle = hairStyle;
 	}
 	
+	
 	public HairStyle getHairStyle() {
-		return hairStyle;
+		return this.hairStyle;
 	}
 	
 	public Clothing getClothing() {
-		return clothing;
+		return this.clothing;
 	}
 	public String getName() {
 		return characterName;
@@ -70,7 +73,7 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 	@Override
 	public BodyTypes getTemplate() {
 		// TODO Auto-generated method stub
-		return null;
+		return bodyType;
 	}
 
 	

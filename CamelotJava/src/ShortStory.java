@@ -1,4 +1,3 @@
-import java.util.HashMap;
 
 import com.actions.ActionSequence;
 import com.actions.AddToList;
@@ -26,6 +25,9 @@ import com.actions.Take;
 import com.entities.Item.Items;
 import com.entities.Place.Places;
 import com.entities.Things.ThingNames;
+import com.playerInput.ActionChoice;
+import com.playerInput.ActionChoice.Icons;
+import com.playerInput.SelectionChoice;
 import com.sequences.CharacterCreation;
 import com.storygraph.ActionMap;
 import com.storygraph.INode;
@@ -39,7 +41,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private Place camp, alchemyShop, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, bluePotion, greenPotion;
 	
-	private enum NodeLabels {
+	public enum NodeLabels {
 		Init, Start, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
 		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
@@ -47,7 +49,283 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	}
 	
 	public INode getRoot() {
-		return new Node("root");
+		var InitNode = new Node(NodeLabels.Init.toString());
+		var CourtYardNode = new Node(NodeLabels.CourtYard.toString());
+		var EvilBookNode = new Node(NodeLabels.EvilBook.toString());
+		var GoToAlchemyShopNode = new Node(NodeLabels.GoToAlchemyShop.toString());
+		var BuyPoisonNode = new Node(NodeLabels.BuyPoison.toString());
+		var StudyEvilBookNode = new Node(NodeLabels.StudyEvilBook.toString());
+		var DrinkMakesWeakNode = new Node(NodeLabels.DrinkMakesWeak.toString());
+		var GoToCourtYard1ANode = new Node(NodeLabels.GoToCourtYard1A.toString());
+		var KingDrinksPoisonNode = new Node(NodeLabels.KingDrinksPoison.toString());
+		var KingKillsYouNode = new Node(NodeLabels.KingKillsYou.toString());
+		var GoToCourtYard2ANode = new Node(NodeLabels.GoToCourtYard2A.toString());
+		var WeakFromPoisonDieNode = new Node(NodeLabels.WeakFromPoisonDie.toString());
+		var WeakGetArrestedNode = new Node(NodeLabels.WeakGetArrested.toString());
+		var BuyPotionNode = new Node(NodeLabels.BuyPotion.toString());
+		var DrinkGivesPowersNode = new Node(NodeLabels.DrinkGivesPowers.toString());
+		var GoToCourtYard4ANode = new Node(NodeLabels.GoToCourtYard4A.toString());
+		var PowersNotUsedGetArrestedNode = new Node(NodeLabels.PowersNotUsedGetArrested.toString());
+		var PowersBecomeKingNode = new Node(NodeLabels.PowersBecomeKing.toString());
+		var GreenBookNode = new Node(NodeLabels.GreenBook.toString());
+		var GoToCampNode = new Node(NodeLabels.GoToCamp.toString());
+		var TakeSwordNode = new Node(NodeLabels.TakeSword.toString());
+		var TakeTorchNode = new Node(NodeLabels.TakeTorch.toString());
+		var GoToCourtYard4CNode = new Node(NodeLabels.GoToCourtYard4C.toString());
+		var TorchBecomeKingNode = new Node(NodeLabels.TorchBecomeKing.toString());
+		var GuardsArrestYouNode = new Node(NodeLabels.GuardsArrestYou.toString());
+		var GetArmourNode = new Node(NodeLabels.GetArmour.toString());
+		var GoToCourtYard3CNode = new Node(NodeLabels.GoToCourtYard3C.toString());
+		var YouDieNode = new Node(NodeLabels.YouDie.toString());
+		var SwordBecomeKingNode = new Node(NodeLabels.SwordBecomeKing.toString());
+		var TakeSpellBookNode = new Node(NodeLabels.TakeSpellBook.toString());
+		var ReadSpellBookNode = new Node(NodeLabels.ReadSpellBook.toString());
+		var GoToCourtYard2CNode = new Node(NodeLabels.GoToCourtYard2C.toString());
+		var GoodSpellsKingDiesNode = new Node(NodeLabels.GoodSpellsKingDies.toString());
+		var NoSpellsGetArrestedNode = new Node(NodeLabels.NoSpellsGetArrested.toString());
+		
+		InitNode.addChild(
+				new ActionChoice(
+						ActionNames.Start.toString(),
+						Icons.start //idk wtf to do with this, like we just need to click the menu or smth,
+						"Start",
+						true),
+				CourtYardNode);
+		CourtYardNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(),
+						courtYard.getFurniture("BigStall.Left"),
+						Icons.evilbook, 
+						"Take Evil Book", 
+						true), 
+				EvilBookNode);
+		CourtYardNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(),
+						courtYard.getFurniture("BigStall.Right"),
+						Icons.book,
+						"Take Green Book", 
+						true), 
+				GreenBookNode);
+		
+		// right side of story
+		EvilBookNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						courtYard.getFurniture("Gate"),
+						Icons.exit, 
+						"Go To The Alchemy Shop", 
+						true), 
+				GoToAlchemyShopNode);
+		GoToAlchemyShopNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(),
+						alchemyShop.getFurniture("Bar.Right"),
+						Icons.potion, 
+						"Take the Blue Potion", 
+						true), 
+				BuyPotionNode);
+		GoToAlchemyShopNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(), 
+						alchemyShop.getFurniture("Bar.Left"),
+						Icons.poison, 
+						"Take the poison",
+						true),
+				BuyPoisonNode);
+		BuyPoisonNode.addChild(
+				new ActionChoice(
+						ActionNames.LookAt.toString(),
+						Icons.research, 
+						"Read the evil book",
+						true), 
+				StudyEvilBookNode);
+		BuyPoisonNode.addChild(
+				new ActionChoice(
+						ActionNames.Drink.toString(), 
+						Icons.drink, 
+						"Drink the poison",
+						true), 
+				DrinkMakesWeakNode);
+		StudyEvilBookNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.door, 
+						"Go back to the courtyard",
+						true), 
+				GoToCourtYard1ANode);
+		GoToCourtYard1ANode.addChild(
+				new ActionChoice(
+						ActionNames.Give.toString(),
+						Icons.poison,
+						"Give the king the poison",
+						true),
+				KingDrinksPoisonNode);
+		GoToCourtYard1ANode.addChild(
+				new ActionChoice(
+						ActionNames.Cast.toString(),
+						Icons.firespell,
+						"Cast spells on the king",
+						true),
+				KingKillsYouNode);
+		DrinkMakesWeakNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(),
+						Icons.door, 
+						"Go back to the courtyard",
+						true),
+				GoToCourtYard2ANode);
+		GoToCourtYard2ANode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(),
+						Icons.hurt,
+						"Attack the King",
+						true),
+				WeakFromPoisonDieNode);
+		GoToCourtYard2ANode.addChild(
+				new ActionChoice(
+						ActionNames.Cast.toString(),
+						Icons.firespell,
+						"Cast Spells on the King",
+						true),
+				WeakGetArrestedNode);
+		BuyPotionNode.addChild(
+				new ActionChoice(
+						ActionNames.Drink.toString(), 
+						Icons.drink,
+						"Drink the potion",
+						true),
+				DrinkGivesPowersNode);
+		DrinkGivesPowersNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.door,
+						"Go back to the courtyard",
+						true),
+				GoToCourtYard4ANode);
+		GoToCourtYard4ANode.addChild(
+				new ActionChoice(
+						ActionNames.Cast.toString(), 
+						Icons.firespell,
+						"Cast spells on the king",
+						true),
+				PowersBecomeKingNode);
+		GoToCourtYard4ANode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(), 
+						Icons.hurt,
+						"Attack the king",
+						true),
+				PowersNotUsedGetArrestedNode);
+		
+		// left side of story
+		GreenBookNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.exit, 
+						"Go to the Camp", 
+						true), 
+				GoToCampNode);
+		GoToCampNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(), 
+						Icons.exit, 
+						"Take the sword", 
+						true), 
+				TakeSwordNode);
+		GoToCampNode.addChild(
+				new ActionChoice(
+						ActionNames.PickUp.toString(), 
+						Icons.darkmagic, 
+						"Pick up the Spell Book", 
+						true), 
+				TakeSpellBookNode);
+		TakeSwordNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(), 
+						Icons.torch, 
+						"Grab a torch", 
+						true), 
+				TakeTorchNode);
+		TakeSwordNode.addChild(
+				new ActionChoice(
+						ActionNames.Take.toString(), 
+						Icons.torch, 
+						"Get Armour", 
+						true), 
+				GetArmourNode);
+		TakeTorchNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.door, 
+						"Go Back to CourtYard", 
+						true), 
+				GoToCourtYard4CNode);
+		GoToCourtYard4CNode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(), 
+						Icons.sword, 
+						"Attack with Sword", 
+						true), 
+				GuardsArrestYouNode);
+		GoToCourtYard4CNode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(), 
+						Icons.torch, 
+						"Attack with Torch", 
+						true), 
+				TorchBecomeKingNode);
+		GetArmourNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.door, 
+						"Go Back To CourtYard", 
+						true), 
+				GoToCourtYard3CNode);
+		GoToCourtYard3CNode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(), 
+						Icons.draw, 
+						"Attack the King", 
+						true), 
+				YouDieNode);
+		GoToCourtYard3CNode.addChild(
+				new ActionChoice(
+						ActionNames.ShowDialog.toString(), 
+						Icons.talk, 
+						"Talk it out with King", 
+						true), 
+				SwordBecomeKingNode);
+		TakeSpellBookNode.addChild(
+				new ActionChoice(
+						ActionNames.LookAt.toString(), 
+						Icons.research, 
+						"Read the new spell book", 
+						true), 
+				ReadSpellBookNode);
+		ReadSpellBookNode.addChild(
+				new ActionChoice(
+						ActionNames.Exit.toString(), 
+						Icons.door, 
+						"Go Back to Courtyard", 
+						true), 
+				GoToCourtYard2CNode);
+		GoToCourtYard2CNode.addChild(
+				new ActionChoice(
+						ActionNames.Cast.toString(), 
+						Icons.firespell, 
+						"Cast a spell on the king", 
+						true), 
+				GoodSpellsKingDiesNode);
+		GoToCourtYard2CNode.addChild(
+				new ActionChoice(
+						ActionNames.Attack.toString(), 
+						Icons.hurt, 
+						"Fight the King", 
+						true), 
+				NoSpellsGetArrestedNode);
+		
+		return root;
 	}
 	
 	public void getThings() {
@@ -114,12 +392,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
-	private ActionSequence getStart() {
-		var sequence = new ActionSequence();
-		sequence.combineWith(new CharacterCreation(edith));
-		sequence.add(new Position(edith, courtYard));
-		return sequence;
-	}
+	
 	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(edith));
