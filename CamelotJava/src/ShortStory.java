@@ -38,7 +38,7 @@ import com.entities.Character;
 public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place camp, alchemyShop, courtYard;
-	private Item greenbook, spellbook, sword, helmet, torch, evilbook, bluePotion, greenPotion;
+	private Item greenbook, sword, helmet, torch, evilbook, bluePotion, greenPotion, spellBook;
 	
 	public enum NodeLabels {
 		Init, Start, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
@@ -294,7 +294,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				YouDieNode);
 		
 		TakeSpellBookNode.addChild(new ActionChoice(ActionNames.LookAt.toString(), 
-				spellbook,
+				spellBook,
 				Icons.research, 
 				"Read the new spell book to learn how to cast spells!", 
 				true), 
