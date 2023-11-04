@@ -224,7 +224,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				GoToCampNode);
 		
 		GoToCampNode.addChild(new ActionChoice(ActionNames.Take.toString(),
-				camp.getFurniture("Barrel"),
+				camp.getFurniture("BigStall.Right"),
 				ActionChoice.Icons.book,
 				"Go to the camp!",
 				true), 
@@ -232,91 +232,91 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		
 		GoToCampNode.addChild(new ActionChoice(ActionNames.Take.toString(), 
 				camp.getFurniture("Chest"),
-				Icons.sword, 
+				ActionChoice.Icons.sword, 
 				"Take the sword!", 
 				true), 
 				TakeSwordNode);
 		
 		TakeSwordNode.addChild(new ActionChoice(ActionNames.Take.toString(),
 				camp.getFurniture("Barrel"),
-				Icons.torch, 
+				ActionChoice.Icons.torch, 
 				"Grab the torch!", 
 				true), 
 				TakeTorchNode);
 		
 		TakeSwordNode.addChild(new ActionChoice(ActionNames.Take.toString(),
 				camp.getFurniture("Stall"),
-				Icons.armour, 
+				ActionChoice.Icons.armour, 
 				"Get your Armour!", 
 				true), 
 				GetArmourNode);
 		
 		TakeTorchNode.addChild(new ActionChoice(ActionNames.Exit.toString(),
 				camp.getFurniture("Exit"),
-				Icons.door, 
+				ActionChoice.Icons.door, 
 				"Go Back to CourtYard to kill the King!", 
 				true), 
 				GoToCourtYard4CNode);
 		
 		GoToCourtYard4CNode.addChild(new ActionChoice(ActionNames.Attack.toString(),
 				king,
-				Icons.sword, 
+				ActionChoice.Icons.sword, 
 				"Attack the King with your Sword!", 
 				true), 
 				GuardsArrestYouNode);
 		
 		GoToCourtYard4CNode.addChild(new ActionChoice(ActionNames.Attack.toString(),
 				king,
-				Icons.torch, 
+				ActionChoice.Icons.torch, 
 				"Attack the King with your Torch!", 
 				true), 
 				TorchBecomeKingNode);
 		
 		GetArmourNode.addChild(new ActionChoice(ActionNames.Exit.toString(),
 				camp.getFurniture("Exit"),
-				Icons.door, 
+				ActionChoice.Icons.door, 
 				"Go Back To CourtYard to kill the King!", 
 				true), 
 				GoToCourtYard3CNode);
 		
 		GoToCourtYard3CNode.addChild(new ActionChoice(ActionNames.Attack.toString(),
 				king,
-				Icons.draw, 
+				ActionChoice.Icons.draw, 
 				"Attack the King!", 
 				true), 
 				SwordBecomeKingNode);
 		
 		GoToCourtYard3CNode.addChild(new ActionChoice(ActionNames.ShowDialog.toString(),
 				king,
-				Icons.talk, 
+				ActionChoice.Icons.talk, 
 				"Talk it out with King", 
 				true), 
 				YouDieNode);
 		
 		TakeSpellBookNode.addChild(new ActionChoice(ActionNames.LookAt.toString(), 
 				spellBook,
-				Icons.research, 
+				ActionChoice.Icons.research,
 				"Read the new spell book to learn how to cast spells!", 
 				true), 
 				ReadSpellBookNode);
 		
 		ReadSpellBookNode.addChild(new ActionChoice(ActionNames.Exit.toString(),
 				camp.getFurniture("Exit"),
-				Icons.door, 
+				ActionChoice.Icons.door, 
 				"Go Back to Courtyard to kill the King!", 
 				true), 
 				GoToCourtYard2CNode);
 		
 		GoToCourtYard2CNode.addChild(new ActionChoice(ActionNames.Cast.toString(),
 				king,
-				Icons.firespell, 
+				ActionChoice.Icons.firespell, 
 				"Cast a spell on the king!", 
 				true), 
 				GoodSpellsKingDiesNode);
 		
 		GoToCourtYard2CNode.addChild(new ActionChoice(ActionNames.Attack.toString(),
 				king,
-				Icons.hurt, 
+				ActionChoice.Icons.hurt, 
 				"Fight the King!", 
 				true), 
 				NoSpellsGetArrestedNode);
