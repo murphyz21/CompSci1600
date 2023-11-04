@@ -36,8 +36,7 @@ import com.entities.*;
 import com.entities.Character;
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
-	private Character edith;
-	private Character king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
+	private Character edith, king, guard1, guard2, guard3, alchemist, campBegger1, campBegger2, campBegger3;
 	private Place camp, alchemyShop, courtYard;
 	private Item greenbook, spellBook, sword, helmet, torch, evilbook, bluePotion, greenPotion;
 	
@@ -48,7 +47,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
 	}
 	
-	public INode getRoot() {
+	public enum ActionNames {Take, Start, Exit, LookAt, Drink, Give, Cast, Attack}
+	
+		public INode getRoot() {
 		var InitNode = new Node(NodeLabels.Init.toString());
 		var CourtYardNode = new Node(NodeLabels.CourtYard.toString());
 		var EvilBookNode = new Node(NodeLabels.EvilBook.toString());
