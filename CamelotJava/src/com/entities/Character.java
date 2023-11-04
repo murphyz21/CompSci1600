@@ -27,7 +27,8 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 		Merchant, 
 		Noble, 
 		Peasant, 
-		Priest;
+		Priest,
+		King;
 	}
 	
 	public enum HairStyle {
