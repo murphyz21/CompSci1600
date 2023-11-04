@@ -3,7 +3,8 @@ import com.storygraph.*;
 public class MainClass {
 	public static void main(String[] args) {
 		try {
-		var story = new ShortStory();
+		System.out.println("ksull");
+		var story = new SampleStory();
 		var graph = new Graph();
 		var currentNode = story.getRoot();
 		var map = story.getMap();
