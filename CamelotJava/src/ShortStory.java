@@ -49,11 +49,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	public enum ActionNames {Take, Start, Exit, LookAt, Drink, Give, Cast, Attack, ShowDialog}
 	
-	public ShortStory() {
-		getThings();
-	}
-	
-	
 		public INode getRoot() {
 		var root = new Node(NodeLabels.Init.toString());
 		var CourtYardNode = new Node(NodeLabels.CourtYard.toString());

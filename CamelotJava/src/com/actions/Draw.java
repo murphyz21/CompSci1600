@@ -3,7 +3,7 @@ package com.actions;
 import com.entities.Item;
 
 public class Draw implements IAction{
-	private com.entities.Character name;
+	private Character name;
 	private Item item;
 	
 	public Draw(com.entities.Character name, Item item) {
