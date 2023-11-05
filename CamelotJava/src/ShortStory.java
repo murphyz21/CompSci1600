@@ -86,11 +86,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var NoSpellsGetArrestedNode = new Node(NodeLabels.NoSpellsGetArrested.toString());
 		
 		root.addChild(
-				new ActionChoice(
-						ActionNames.Start.toString(),
-						Icons.start, //idk wtf to do with this, like we just need to click the menu or smth,
-						"Start",
-						true),
+				new SelectionChoice("Start"), 
 				CourtYardNode);
 		
 		CourtYardNode.addChild(new ActionChoice(ActionNames.Take.toString(),
@@ -325,15 +321,15 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	}
 	
 	public void getThings() {
-		edith = new Character(ThingNames.Edith.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		king = new Character(ThingNames.king.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		guard1 = new Character(ThingNames.guard1.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		guard2 = new Character(ThingNames.guard2.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		guard3 = new Character(ThingNames.guard3.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		alchemist = new Character(ThingNames.alchemist.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		campBegger1 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		campBegger2 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
-		campBegger3 =  new Character(ThingNames.campBegger3.toString(), Character.BodyTypes.D, Character.Clothing.Peasant);
+		edith = new Character(ThingNames.Edith.toString(), Character.BodyTypes.C, Character.Clothing.Peasant);
+		king = new Character(ThingNames.king.toString(), Character.BodyTypes.H, Character.Clothing.King);
+		guard1 = new Character(ThingNames.guard1.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
+		guard2 = new Character(ThingNames.guard2.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
+		guard3 = new Character(ThingNames.guard3.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
+		alchemist = new Character(ThingNames.alchemist.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
+		campBegger1 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.B, Character.Clothing.Beggar);
+		campBegger2 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.E, Character.Clothing.Beggar);
+		campBegger3 =  new Character(ThingNames.campBegger3.toString(), Character.BodyTypes.G, Character.Clothing.Beggar);
 		
 		camp = new Place(ThingNames.camp.toString(), Place.Places.Camp);
 		alchemyShop = new Place(ThingNames.alchemyShop.toString(), Place.Places.AlchemyShop);
@@ -356,21 +352,16 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		//Left Side
 		camp = new Place(ThingNames.camp.toString(), Places.Camp);
 		spellBook = new Item(ThingNames.spellBook.toString(), Items.SpellBook);
-		campBegger1 = new Character(ThingNames.campBegger1.toString());
-		campBegger2 = new Character(ThingNames.campBegger2.toString());
-		campBegger3 = new Character(ThingNames.campBegger3.toString());
 		
 		
 		sword = new Item(ThingNames.Sword.toString(), Items.Sword);
 		helmet = new Item(ThingNames.Helmet.toString(), Items.Helmet);
 		torch = new Item(ThingNames.Torch.toString(), Items.LitTorch);
 		
-		guard1 = new Character(ThingNames.guard1.toString());
 		
 		//Right Side
 		evilbook = new Item(ThingNames.evilbook.toString(), Items.EvilBook);
 		alchemyShop = new Place(ThingNames.alchemyShop.toString(), Places.AlchemyShop);
-		alchemist = new Character(ThingNames.alchemist.toString());
 
 		guard2 = new Character(ThingNames.guard2.toString());
 		
@@ -751,7 +742,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	public ActionMap getMap() {
 		var map = new ActionMap();
 		map.add(NodeLabels.Init.toString(), getInit());
-		map.add(NodeLabels.Start.toString(), getStart());
 		map.add(NodeLabels.CourtYard.toString(), getCourtYard());
 		map.add(NodeLabels.GreenBook.toString(), getGreenBook());
 		map.add(NodeLabels.GoToCamp.toString(), getGoToCamp());
