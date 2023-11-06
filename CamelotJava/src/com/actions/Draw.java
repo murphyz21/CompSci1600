@@ -1,6 +1,7 @@
 package com.actions;
 
 import com.entities.Item;
+import com.entities.Character;
 
 public class Draw implements IAction{
 	Character name;
