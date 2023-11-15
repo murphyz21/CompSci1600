@@ -38,18 +38,15 @@ public class Character implements IEntity, IThing<com.entities.Character.BodyTyp
 	}
 	
 	public Character(String characterName) {
-		this.characterName = characterName;
+		this(characterName, BodyTypes.C, Clothing.Peasant, HairStyle.Long);
 	}
 	
 	public Character(String characterName, BodyTypes bodyType) {
-		this.characterName = characterName;
-		this.bodyType = bodyType;
+		this(characterName, bodyType, Clothing.Peasant, HairStyle.Long);
 	}
 	
 	public Character(String characterName, BodyTypes bodyType, Clothing clothing) {
-		this.characterName = characterName;
-		this.bodyType = bodyType;
-		this.clothing = clothing;
+		this(characterName, bodyType, clothing, HairStyle.Long);
 	}
 	
 	public Character(String characterName, BodyTypes bodyType, Clothing clothing, HairStyle hairStyle) {

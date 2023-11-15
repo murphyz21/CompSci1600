@@ -5,7 +5,7 @@ import com.entities.Character;
 public class Attack implements IAction{
 	private Character attacker;
 	private Character enemy;
-	private Boolean bool = false;
+	private boolean bool = false;
 	
 	public Attack(Character attacker, Character enemy) {
 		this.attacker = attacker;
@@ -25,9 +25,9 @@ public class Attack implements IAction{
 		return true;
 	}
 	
-	@Override
-	public String toString() {
-		return String.format("%s(%s, %s, %s)", getName(), attacker, enemy, bool.toString());
+	// @Override
+	// public String toString() {
+		// return String.format("%s(%s, %s, %s)", getName(), attacker, enemy, bool.toString());
 	}
-}
+// }
 

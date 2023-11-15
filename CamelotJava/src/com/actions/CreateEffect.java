@@ -2,9 +2,9 @@ package com.actions;
 
 public class CreateEffect implements IAction{
 	Character name;
-	Effect effect;
+	String effect;
 	
-	public CreateEffect(Character name, Effect effect) {
+	public CreateEffect(Character name, String effect) {
 		this.name = name;
 		this.effect = effect;
 	}
