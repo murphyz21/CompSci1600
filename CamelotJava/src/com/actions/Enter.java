@@ -1,6 +1,7 @@
 package com.actions;
 
 import com.entities.Furniture;
+import com.entities.Character;
 
 
 public class Enter implements IAction{

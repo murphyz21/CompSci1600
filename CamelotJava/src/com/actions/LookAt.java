@@ -28,6 +28,6 @@ public class LookAt implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s, %s)", getName(), looker, target.toString());
+		return String.format("%s(%s, %s)", getName(), looker.getName(), target.getName());
 	}
 }

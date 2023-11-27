@@ -25,9 +25,9 @@ public class Attack implements IAction{
 		return true;
 	}
 	
-	// @Override
-	// public String toString() {
-		// return String.format("%s(%s, %s, %s)", getName(), attacker, enemy, bool.toString());
+	@Override
+	public String toString() {
+		return String.format("%s(%s, %s, %s)", getName(), attacker.getName(), enemy.getName(), bool);
 	}
-// }
+}
 

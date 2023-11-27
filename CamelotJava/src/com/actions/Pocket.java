@@ -5,8 +5,8 @@ import com.entities.Character;
 
 public class Pocket implements IAction{
 	
-	private Character name;
-	private Item item;
+	Character name;
+	Item item;
 	
 	public Pocket(Character name, Item item) {
 		this.name = name;
@@ -22,7 +22,7 @@ public class Pocket implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s, %s)", getName(), name, item);
+		return String.format("%s(%s, %s)", getName(), name.getName(), item.getName());
 	}
 
 }

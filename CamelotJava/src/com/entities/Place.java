@@ -6,7 +6,7 @@ public class Place implements IThing<com.entities.Place.Places> {
 	
 	public enum Places {
 		AlchemyShop, 
-		BlackSmith, 
+		Blacksmith, 
 		Bridge, 
 		Camp, 
 		CastleBedroom, 

@@ -3,7 +3,7 @@ package com.actions;
 import com.entities.Character;
 
 public class Dance implements IAction{
-	private Character name;
+	Character name;
 	
 	public Dance(Character name) {
 		this.name = name;
@@ -18,6 +18,6 @@ public class Dance implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s)", getName(), name);
+		return String.format("%s(%s)", getName(), name.getName());
 	}
 }

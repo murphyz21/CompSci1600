@@ -1,17 +1,23 @@
 package com.actions;
 
 import com.entities.Character;
+import com.entities.IEntity;
 import com.entities.Item;
 
 public class PutDown implements IAction{
-	private com.entities.Character name;
-	private Item item;
+	Character character;
+	Item item;
+	IEntity other;
 	
-	public PutDown(com.entities.Character name, Item item) {
-		this.name = name;
+	public PutDown(Character character, Item item) {
+		this.character = character;
 		this.item = item;
 	}
-
+	
+	public PutDown(Character character, Item item, IEntity other) {
+		this(character, item);
+		this.other=other;
+	}
 	
 	public String getName() {
 		return "PutDown";
@@ -22,6 +28,10 @@ public class PutDown implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s, %s)", getName(), name.toString(), item.toString());
+		if(other==null)
+			return String.format("%s(%s, %s)", getName(), character.getName(), item.getName());
+		else
+			return String.format("%s(%s, %s, %s)", getName(), character.getName(), item.getName(), other.getName());
 	}
+
 }
