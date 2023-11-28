@@ -412,6 +412,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		// comment 
 		// new stuff
+		// commetn2
 		return sequence;
 	}
 	
