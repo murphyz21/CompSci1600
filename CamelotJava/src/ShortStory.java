@@ -399,7 +399,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(fortuneteller));
 		sequence.add(new SetDialog("Greetings Edith! Thou hast returned to the ancient town of Ravenholm! You and the fellow serfs hath grown miserable under the tyrannical rule of King Nikos. His oppression and greed weigheth heavily upon the shoulders of the common folk, and the time for change is upon us! Thou hast been chosen to lead the rebellion. The destiny of the town lies in your hands. Choose wisely to liberate the serfs, end the reign of King Nikos, and restore righteousness to the land! "));
-		sequence.add(new SetDialog("For your first task, talk to me, the fortune teller, by that old stall to see which faith you choose..."));
+		sequence.add(new SetDialog("For your first task talk to me, the fortune teller by that old stall to see which faith you choose..."));
 		sequence.add(new Wait(6));
 		sequence.add(new Position(fortuneteller, Courtyard, "BigStall"));
 		sequence.add(new Position(guard1, Courtyard, "Horse"));
