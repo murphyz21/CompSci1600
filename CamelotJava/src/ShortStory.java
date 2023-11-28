@@ -414,8 +414,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, Courtyard, "BigStall.Left"));
 		sequence.add(new HideDialog());
-		// comment 
-		//kms
 		
 		return sequence;
 	}
@@ -446,7 +444,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(warlock, BlackSmith, "Target"));
 		sequence.add(new Position(edith, BlackSmith, "Door"));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetLeft(warlock));	
 		sequence.add(new SetDialog("Greetings Edith, I am very glad the green book has sent you to my shop. I have crafted some equipment and supplies for you to battle the king with. Choose either a sword or the spellbook as your weapon."));
 		sequence.add(new Wait(6));
 		sequence.add(new Create<Item>(sword));
