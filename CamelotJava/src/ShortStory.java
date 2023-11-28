@@ -46,12 +46,12 @@ import com.entities.Character;
 
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
-	private Character edith, king, guard1, guard2, guard3, alchemist, warlock;
+	private Character edith, king, guard1, guard2, guard3, alchemist, warlock, fortuneteller;
 	private Place BlackSmith, alchemyShop, Courtyard;
 	private Item greenbook, sword, helmet, torch, evilbook, bluePotion, greenPotion, spellBook;
 	
 	public enum NodeLabels {
-		Init, Start, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
+		Init, FortuneTeller, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
 		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
@@ -68,6 +68,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	}
 		public INode getRoot() {
 		var root = new Node(NodeLabels.Init.toString());
+		var FortuneTellerNode = new Node(NodeLabels.FortuneTeller.toString());
 		var CourtYardNode = new Node(NodeLabels.CourtYard.toString());
 		var EvilBookNode = new Node(NodeLabels.EvilBook.toString());
 		var GoToAlchemyShopNode = new Node(NodeLabels.GoToAlchemyShop.toString());
@@ -104,6 +105,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		
 		root.addChild(
 				new SelectionChoice("Start"), 
+				FortuneTellerNode);
+		
+		FortuneTellerNode.addChild(new ActionChoice(ActionNames.ShowDialog.toString(),
+				fortuneteller, 
+				ActionChoice.Icons.talk, 
+				"Talk to Fortune Teller", 
+				false), 
 				CourtYardNode);
 		
 		CourtYardNode.addChild(new ActionChoice(ActionNames.Take.toString(),
@@ -334,8 +342,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		guard2 = new Character(ThingNames.guard2.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
 		guard3 = new Character(ThingNames.guard3.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
 		alchemist = new Character(ThingNames.alchemist.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
-		// campBegger1 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.B, Character.Clothing.Beggar);
-		// campBegger2 = new Character(ThingNames.campBegger1.toString(), Character.BodyTypes.E, Character.Clothing.Beggar);
+		fortuneteller = new Character(ThingNames.fortuneteller.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
 		warlock =  new Character(ThingNames.warlock.toString(), Character.BodyTypes.D, Character.Clothing.Warlock);
 		
 		BlackSmith = new Place(ThingNames.Blacksmith.toString(), Places.Blacksmith);
@@ -381,8 +388,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
-	
-	private ActionSequence getCourtYard() {
+	private ActionSequence getFortuneTeller() {
 		var sequence = new ActionSequence();
 		sequence.add(new HideMenu());
 		sequence.add(new EnableInput(true));
@@ -393,6 +399,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(guard1));
 		sequence.combineWith(new CharacterCreation(guard2));
 		sequence.combineWith(new CharacterCreation(guard3));
+		sequence.combineWith(new CharacterCreation(fortuneteller));
+		sequence.add(new Position(fortuneteller, Courtyard, "BigStall"));
 		sequence.add(new Position(guard1, Courtyard, "Horse"));
 		sequence.add(new Position(guard2, Courtyard, "LeftBench.Left"));
 		sequence.add(new Position(guard3, Courtyard, "RightBench.Right"));
@@ -402,7 +410,16 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, Courtyard, "BigStall.Left"));
 		sequence.add(new HideDialog());
-		
+		return sequence;
+	}
+	
+	private ActionSequence getCourtYard() {
+		var sequence = new ActionSequence();
+		sequence.add(new ShowDialog());
+		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
+		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
+		sequence.add(new Wait(6));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 	private ActionSequence getGreenBook() {
@@ -782,6 +799,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	public ActionMap getMap() {
 		var map = new ActionMap();
 		map.add(NodeLabels.Init.toString(), getInit());
+		map.add(NodeLabels.FortuneTeller.toString(), getFortuneTeller());
 		map.add(NodeLabels.CourtYard.toString(), getCourtYard());
 		map.add(NodeLabels.GreenBook.toString(), getGreenBook());
 		map.add(NodeLabels.GoToCamp.toString(), getGoToCamp());
