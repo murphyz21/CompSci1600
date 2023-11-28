@@ -21,7 +21,7 @@ public class Draw implements IAction{
 	}
 	
 	public String toString() {
-		return String.format("%s(%s, %s)", getName(), name, item);
+		return String.format("%s(%s, %s)", getName(), name.getName(), item.getName());
 	}
 
 }

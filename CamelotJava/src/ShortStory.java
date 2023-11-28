@@ -44,6 +44,7 @@ import com.storygraph.Node;
 import com.entities.*;
 import com.entities.Character;
 
+
 public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private Character edith, king, guard1, guard2, guard3, alchemist, warlock;
 	private Place BlackSmith, alchemyShop, Courtyard;
@@ -56,7 +57,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
 	}
 	
-	public enum ActionNames {Take, Start, exit, LookAt, Drink, Give, Cast, Attack, ShowDialog}
+	public enum ActionNames {Take, Start, exit, LookAt, Drink, Give, Cast, Attack, ShowDialog, Unpocket}
 	
 	public ShortStory() {
 		getThings();
@@ -228,12 +229,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				Courtyard.getFurniture("Exit"), 
 				PositionChoice.Condition.arrived),  
 				GoToCampNode);
-		// GreenBookNode.addChild(new ActionChoice(ActionNames.exit.toString(), 
-				// Courtyard.getFurniture("Gate"), 
-				// ActionChoice.Icons.exit, 
-				// "Go to the Camp!", 
-				// false),
-				// GoToCampNode);
+		
 		
 		GoToCampNode.addChild(new ActionChoice(ActionNames.Take.toString(),
 				spellBook, 
@@ -269,8 +265,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				"Go Back to CourtYard to kill the King!", 
 				false), 
 				GoToCourtYard4CNode);
+
 		
-		GoToCourtYard4CNode.addChild(new ActionChoice(ActionNames.Attack.toString(),
+		GoToCourtYard4CNode.addChild(new ActionChoice(ActionNames.Unpocket.toString(),
 				king,
 				ActionChoice.Icons.sword, 
 				"Attack the King with your Sword!", 
@@ -395,6 +392,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new HideMenu());
 		sequence.add(new EnableInput(true));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
+		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
+		sequence.add(new Wait(6));
 		sequence.combineWith(new CharacterCreation(guard1));
 		sequence.combineWith(new CharacterCreation(guard2));
 		sequence.combineWith(new CharacterCreation(guard3));
@@ -406,10 +407,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(greenbook, Courtyard, "BigStall.Right"));
 		sequence.add(new Create<Item>(evilbook));
 		sequence.add(new Position(evilbook, Courtyard, "BigStall.Left"));
-		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("\" The King has been treating peasants unfairly. It is time to take a stand!\""));
-		sequence.add(new SetDialog("\" Maybe those books on the stall can give you some guidance\""));
-		sequence.add(new Wait(7));
 		sequence.add(new HideDialog());
 		
 		return sequence;
@@ -431,6 +428,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(warlock));
 		sequence.add(new Position(warlock, BlackSmith, "Target"));
 		sequence.add(new Position(edith, BlackSmith, "Door"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetDialog("Edith! Stock up on equipment before your fight with the king!"));
+		sequence.add(new Wait(6));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Create<Item>(helmet));
 		sequence.add(new Create<Item>(torch));
@@ -439,9 +439,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(helmet, BlackSmith, "Table.Left"));;
 		sequence.add(new Position(torch, BlackSmith, "Anvil"));
 		sequence.add(new Position(spellBook, BlackSmith, "Table.FrontLeft"));
-		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("Edith! Stock up on equipment before your fight with the king!"));
-		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		return sequence;
 	}
@@ -462,7 +459,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Pocket(edith, helmet));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetDialog("You should be good to go. Go confront the king!"));
-		sequence.add(new Wait(6));
+		sequence.add(new Wait(5));
 		sequence.add(new HideDialog());
 		return sequence;
 	}
@@ -507,19 +504,21 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Die(edith));
 		sequence.add(new SetCameraFocus(king));
 		sequence.add(new Dance(king));
-
+		
 		return sequence;
 	}
 	
 	private ActionSequence getSwordBecomeKing() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("Liar!!!!"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetDialog("Begon King Nikos! I will be the Queen now!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		sequence.add(new Draw(edith, sword));
 		sequence.add(new Attack(edith, king, true));
 		sequence.add(new Die(king));
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -549,12 +548,16 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getGuardsArrestYou() {
 		var sequence = new ActionSequence();
+		sequence.add(new Pocket(edith, torch));
+		sequence.add(new Draw(edith, sword));
+		sequence.add(new Attack(edith, king, false));;
 		sequence.add(new SetDialog("It's too late for apologies!"));
 		sequence.add(new SetDialog("Guards come quick!"));
-		sequence.add(new Draw(edith, torch));
-		sequence.add(new Attack(edith, king, false));
-		sequence.add(new Die(king));
+		// sequence.add(new Draw(edith, torch));
+		// sequence.add(new Attack(edith, king, false));
+		// sequence.add(new Die(king));
 		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
+		// sequence.add(new WalkTo);
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(guard2));
 		sequence.add(new Dance(guard3));
@@ -565,17 +568,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	//New Branch
 	private ActionSequence getTakeSpellBook() {
 		var sequence = new ActionSequence();
-		sequence.add(new Create<Item>(spellBook));
-		sequence.add(new Position(spellBook, BlackSmith, "Table.FrontRight"));
 		sequence.add(new Take(edith, spellBook));
-		sequence.add(new AddToList(spellBook, "spellbook!"));
 		return sequence;
 	}
 	
 	private ActionSequence getReadSpellBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new LookAt(edith, spellBook));
-		sequence.add(new Exit(edith, BlackSmith.getFurniture("Door"), true));
 		return sequence;
 	}
 	
