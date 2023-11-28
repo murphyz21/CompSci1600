@@ -55,7 +55,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		Init, FortuneTeller, CourtYard, EvilBook, GoToAlchemyShop, BuyPoison, StudyEvilBook, DrinkMakesWeak, GoToCourtYard1A, KingDrinksPoison,
 		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
-		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
+		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested, GoToCourtYard1C, ReadGreenBook, BadTalkYouDie, BeFriendKing
 	}
 	public enum ChoiceLabels {
 		DrinkMakesWeak, StudyEvilBook
@@ -103,6 +103,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var GoToCourtYard2CNode = new Node(NodeLabels.GoToCourtYard2C.toString());
 		var GoodSpellsKingDiesNode = new Node(NodeLabels.GoodSpellsKingDies.toString());
 		var NoSpellsGetArrestedNode = new Node(NodeLabels.NoSpellsGetArrested.toString());
+		var ReadGreenBookNode = new Node(NodeLabels.ReadGreenBook.toString());
+		var GoToCourtYard1CNode = new Node(NodeLabels.GoToCourtYard1C.toString());
+		var BeFriendKingNode = new Node(NodeLabels.BeFriendKing.toString());
+		var BadTalkYouDieNode = new Node(NodeLabels.BadTalkYouDie.toString());
 		
 		root.addChild(
 				new SelectionChoice("Start"), 
@@ -332,6 +336,27 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				"Fight the King!", 
 				false), 
 				NoSpellsGetArrestedNode);
+		
+		ReadGreenBookNode.addChild(new ActionChoice(ActionNames.exit.toString(), 
+				BlackSmith.getFurniture("Door"), 
+				ActionChoice.Icons.door, 
+				"Go Back to CourtYard!", 
+				false), 
+				GoToCourtYard1CNode);
+		
+		GoToCourtYard1CNode.addChild(new ActionChoice(ActionNames.Give.toString(),
+				king,
+				ActionChoice.Icons.book, 
+				"Give the King the book!", 
+				false), 
+				BeFriendKingNode);
+		
+		GoToCourtYard1CNode.addChild(new ActionChoice(ActionNames.ShowDialog.toString(),
+				king,
+				ActionChoice.Icons.talk, 
+				"Talk to the King", 
+				false), 
+				BadTalkYouDieNode);
 		
 		return root;
 	}
@@ -591,6 +616,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		return sequence;
 	}
 	
+	
 	private ActionSequence getGoToCourtYard2C() {
 		var sequence = new ActionSequence();
 		sequence.add(new Create<Place>(Courtyard));
@@ -629,16 +655,47 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		return sequence;
 	}
 	
+	private ActionSequence getReadGreenBook() {
+		var sequence = new ActionSequence();
+		sequence.add(new LookAt(edith, greenbook));
+		return sequence;
+	}
+	
+	private ActionSequence getGoToCourtYard1C() {
+		var sequence = new ActionSequence();
+		sequence.add(new Position(edith, Courtyard, "Exit"));
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, Courtyard));
+		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
+		sequence.add(new SetDialog("I've come to kill you with my spells!!!"));
+		sequence.add(new SetDialog("I will make things fair I promise! Don't cast a spell on me please, I beg you!"));
+		return sequence;
+	}
+	
+	private ActionSequence getBeFriendKing() {
+		var sequence = new ActionSequence();
+		sequence.add(new Give(edith, greenbook, king));
+		return sequence;
+	}
+	
+	private ActionSequence getBadTalkYouDie() {
+		var sequence = new ActionSequence();
+		// set dialog
+		sequence.add(new Attack(edith, king, false));
+		return sequence;
+	}
+	
+	
+	// EVIL BOOK SIDE
 	private ActionSequence getEvilBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, evilbook));
 		sequence.add(new Pocket(edith, evilbook));
 		return sequence;
 	}
-
+	
 	private ActionSequence getGoToAlchemyShop() {
 		var sequence = new ActionSequence();
-		
 		sequence.combineWith(new CharacterCreation(alchemist));
 		sequence.add(new Create<Place>(alchemyShop));
 		sequence.add(new Position(alchemist, alchemyShop, "Bar.Behind"));
@@ -660,8 +717,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	private ActionSequence getBuyPoison() {
 		var sequence = new ActionSequence();
-		// sequence.add(new SetDialog("Mr. Alchemist I'm on a revolution to kill the king, what potion should I choose?"));
-		// sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
 		sequence.add(new Take(edith, greenPotion, alchemyShop.getFurniture("Bar.Left")));
 		sequence.add(new SetDialog("Would you now like to study the evil book or drink the green potion?"));
 		sequence.add(new SetDialog("[DrinkMakesWeak|Drink the Green Potion!]"));
@@ -839,6 +894,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		map.add(NodeLabels.GoToCourtYard4A.toString(), getGoToCourtYard4A());
 		map.add(NodeLabels.PowersNotUsedGetArrested.toString(), getPowersNotUsedGetArrested());
 		map.add(NodeLabels.PowersBecomeKing.toString(), getPowersBecomeKing());
+		map.add(NodeLabels.ReadGreenBook.toString(), getReadGreenBook());
+		map.add(NodeLabels.GoToCourtYard1C.toString(), getGoToCourtYard1C());
+		map.add(NodeLabels.BadTalkYouDie.toString(), getBadTalkYouDie());
+		map.add(NodeLabels.BeFriendKing.toString(), getBeFriendKing());
 		return map;
 	}
 
