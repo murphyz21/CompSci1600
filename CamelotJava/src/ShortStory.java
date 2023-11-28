@@ -514,7 +514,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		return sequence;
 	}
-	
+	// comment
 	private ActionSequence getGoToCourtYard3C() {
 		var sequence = new ActionSequence();
 		sequence.add(new Position(edith, Courtyard, "Exit"));
