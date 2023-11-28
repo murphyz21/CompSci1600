@@ -391,15 +391,16 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getFortuneTeller() {
 		var sequence = new ActionSequence();
 		sequence.add(new HideMenu());
-		sequence.add(new EnableInput(true));
-		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
-		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
-		sequence.add(new Wait(6));
 		sequence.combineWith(new CharacterCreation(guard1));
 		sequence.combineWith(new CharacterCreation(guard2));
 		sequence.combineWith(new CharacterCreation(guard3));
 		sequence.combineWith(new CharacterCreation(fortuneteller));
+		sequence.add(new EnableInput(true));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(fortuneteller));;
+		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
+		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
+		sequence.add(new Wait(6));
 		sequence.add(new Position(fortuneteller, Courtyard, "BigStall"));
 		sequence.add(new Position(guard1, Courtyard, "Horse"));
 		sequence.add(new Position(guard2, Courtyard, "LeftBench.Left"));
