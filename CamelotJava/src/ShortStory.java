@@ -43,6 +43,7 @@ import com.storygraph.INode;
 import com.storygraph.Node;
 import com.entities.*;
 import com.entities.Character;
+import com.actions.ClearDialog;
 
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
@@ -399,7 +400,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(fortuneteller));
 		sequence.add(new SetDialog("Greetings Edith! Thou hast returned to the ancient town of Ravenholm! You and the fellow serfs hath grown miserable under the tyrannical rule of King Nikos. His oppression and greed weigheth heavily upon the shoulders of the common folk and the time for change is upon us! Thou hast been chosen to lead the rebellion. The destiny of the town lies in your hands. Choose wisely to end the reign of King Nikos and restore righteousness to the land! "));
-		sequence.add(new SetDialog("For your first task you can talk to me (the fortune teller) by that old stall to see which faith you choose..."));
+		sequence.add(new Wait(6));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetDialog("For your first task you can talk to me by that old stall to see which fate you choose..."));
 		sequence.add(new Wait(6));
 		sequence.add(new Position(fortuneteller, Courtyard, "BigStall"));
 		sequence.add(new Position(guard1, Courtyard, "Horse"));
@@ -420,8 +423,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
-		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
+		sequence.add(new SetDialog("Good Day Edith. It is time to make a choice for which path you shall take to bring justice to the land. You may either choose the evil book or the green book. Choose Wisely!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -430,7 +432,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, greenbook));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("This is a Fortune Book! Go to the BlackSmith for your next adventure!"));
+		sequence.add(new SetDialog("You have chosen the green book! This is a fortune book that shows your next task is at the Blacksmith's shop! Go there now to continue your quest!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		sequence.add(new Pocket(edith, greenbook));
