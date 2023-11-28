@@ -3,6 +3,7 @@ package com.actions;
 import java.util.ArrayList;
 
 import com.communication.Messenger;
+import com.playerInput.SelectionChoice;
 
 /**
  * An object of this class represents a sequence of Camelot Actions
@@ -20,10 +21,10 @@ public class ActionSequence {
 	}
 	/**
 	 * Use this function to add an action (implementing IAction) to the sequence
-	 * @param action
+	 * @param selectionChoice
 	 */
-	public void add(IAction action) {
-		actions.add(action);
+	public void add(IAction selectionChoice) {
+		actions.add(selectionChoice);
 	}
 	/**
 	 * This function executes all actions of the sequence in Camelot

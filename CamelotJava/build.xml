@@ -18,7 +18,7 @@
     </target>
 
     <!-- JAR target -->
-    <target name="jar" depends="compile">
+    <target name="jar" depends="compile">                                                 
         <mkdir dir="${build.dir}/jar" />
     	<jar destfile="${build.dir}/jar/${jar.name}" basedir="${build.dir}">
             <manifest>

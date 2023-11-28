@@ -639,6 +639,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		// sequence.add(new SetLeft(edith));
 		sequence.add(new SetDialog("Hi Edith. You can take one of the potions if you'd like!"));
 		sequence.add(new Wait(6));
+		//sequence.add(new SelectionChoice("Take the blue or the green potion!"));;
 		sequence.add(new HideDialog());
 
 		return sequence;
