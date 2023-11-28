@@ -4,14 +4,14 @@ import com.entities.Character;
 
 public class SetRight implements IAction {
 
-	Character name;
+	private Character name;
 	
 	public SetRight(Character name) {
 		this.name = name;
 	}
 	
 	public String getName() {
-		return "ShowDialog";
+		return "SetRight";
 	}
 		
 	public boolean getShouldWait() {
@@ -19,7 +19,7 @@ public class SetRight implements IAction {
 	}
 		
 	public String toString() {
-		return String.format("%s(%s)", name.getName());
+		return String.format("%s(%s)", getName(), name.getName());
 	}
 
 }
