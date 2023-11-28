@@ -3,7 +3,7 @@ package com.actions;
 import com.entities.Character;
 
 public class Drink implements IAction{
-	private Character drink;
+	Character drink;
 	
 	public Drink(Character drink) {
 		this.drink = drink;
@@ -19,6 +19,6 @@ public class Drink implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), drink);
+		return String.format("%s(%s)", getName(), drink.getName());
 	}
 }

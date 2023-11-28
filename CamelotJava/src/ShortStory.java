@@ -56,6 +56,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested
 	}
+	public enum ChoiceLabels {
+		DrinkMakesWeak, StudyEvilBook
+	}
+	
 	
 	public enum ActionNames {Take, Start, exit, LookAt, Drink, Give, Cast, Attack, ShowDialog, Unpocket}
 	
@@ -140,19 +144,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				false), 
 				BuyPoisonNode);
 		
-		BuyPoisonNode.addChild(new ActionChoice(ActionNames.LookAt.toString(),
-				evilbook, 
-				ActionChoice.Icons.research,
-				"Study the Evil Book", 
-				false), 
-				StudyEvilBookNode);
+		BuyPoisonNode.addChild(new SelectionChoice(ChoiceLabels.StudyEvilBook.toString()), StudyEvilBookNode);
 		
-		BuyPoisonNode.addChild(new ActionChoice(ActionNames.Drink.toString(),
-				greenPotion, 
-				ActionChoice.Icons.poison,
-				"Drink the Poison", 
-				false), 
-				DrinkMakesWeakNode);
+		BuyPoisonNode.addChild(new SelectionChoice(ChoiceLabels.DrinkMakesWeak.toString()), DrinkMakesWeakNode);
 		
 		StudyEvilBookNode.addChild(new ActionChoice(ActionNames.exit.toString(),
 				alchemyShop.getFurniture("Door"), 
@@ -164,7 +158,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		GoToCourtYard1ANode.addChild(new ActionChoice(ActionNames.Give.toString(),
 				king, 
 				ActionChoice.Icons.poison,
-				"Take the Blue Potion", 
+				"Give the Green Potion", 
 				false), 
 				KingDrinksPoisonNode);
 		
@@ -192,7 +186,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		GoToCourtYard2ANode.addChild(new ActionChoice(ActionNames.Cast.toString(),
 				king, 
 				ActionChoice.Icons.firespell,
-				"Take the Blue Potion", 
+				"idk", 
 				false), 
 				WeakGetArrestedNode);
 		
@@ -553,9 +547,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Attack(edith, king, false));;
 		sequence.add(new SetDialog("It's too late for apologies!"));
 		sequence.add(new SetDialog("Guards come quick!"));
-		// sequence.add(new Draw(edith, torch));
-		// sequence.add(new Attack(edith, king, false));
-		// sequence.add(new Die(king));
 		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
 		// sequence.add(new WalkTo);
 		sequence.add(new Dance(guard1));
@@ -646,17 +637,20 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	private ActionSequence getBuyPoison() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("Mr. Alchemist I'm on a revolution to kill the king, what potion should I choose?"));
-		sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
+		// sequence.add(new SetDialog("Mr. Alchemist I'm on a revolution to kill the king, what potion should I choose?"));
+		// sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
 		sequence.add(new Take(edith, greenPotion, alchemyShop.getFurniture("Bar.Left")));
-		sequence.add(new AddToList(greenPotion, "this is the green potion!"));
+		sequence.add(new SetDialog("Would you now like to study the evil book or drink the green potion?"));
+		sequence.add(new SetDialog("[DrinkMakesWeak|Drink the Green Potion!]"));
+		sequence.add(new SetDialog("[StudyEvilBook|Study the Book!]"));
+		sequence.add(new ShowDialog());
 		return sequence;
 	}
 
 	private ActionSequence getStudyEvilBook() {
 		var sequence = new ActionSequence();
+		sequence.add(new HideDialog());
 		sequence.add(new LookAt(edith, evilbook));
-		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 
@@ -664,7 +658,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(king));
 		sequence.add(new Position(king, Courtyard));
-		sequence.add(new Position(edith, Courtyard));
+		sequence.add(new Position(edith, Courtyard, "Exit"));
 		return sequence;
 	}
 		
@@ -676,7 +670,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
 		sequence.add(new Die(king));
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
+		
 		return sequence;
 	}
 
@@ -698,9 +692,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	private ActionSequence getDrinkMakesWeak() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("I hope this potion makes me strong so I can defeat the evil King Nikos!"));
+		sequence.add(new HideDialog());
+		// sequence.add(new SetDialog("I hope this potion makes me strong so I can defeat the evil King Nikos!"));
 		sequence.add(new Drink(edith));
-		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 
