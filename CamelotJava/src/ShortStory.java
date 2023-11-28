@@ -43,6 +43,7 @@ import com.storygraph.INode;
 import com.storygraph.Node;
 import com.entities.*;
 import com.entities.Character;
+import com.actions.ClearDialog;
 
 
 public class ShortStory implements IStory, IAction, IThing, IEntity{
@@ -398,8 +399,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new EnableInput(true));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(fortuneteller));
-		sequence.add(new SetDialog("Greetings Edith! Thou hast returned to the ancient town of Ravenholm! You and the fellow serfs hath grown miserable under the tyrannical rule of King Nikos. His oppression and greed weigheth heavily upon the shoulders of the common folk, and the time for change is upon us! Thou hast been chosen to lead the rebellion. The destiny of the town lies in your hands. Choose wisely to liberate the serfs, end the reign of King Nikos, and restore righteousness to the land! "));
-		sequence.add(new SetDialog("For your first task talk to me, the fortune teller by that old stall to see which faith you choose..."));
+		sequence.add(new SetDialog("Greetings Edith! Thou hast returned to the ancient town of Ravenholm! You and the fellow serfs hath grown miserable under the tyrannical rule of King Nikos. His oppression and greed weigheth heavily upon the shoulders of the common folk and the time for change is upon us! Thou hast been chosen to lead the rebellion. The destiny of the town lies in your hands. Choose wisely to end the reign of King Nikos and restore righteousness to the land! "));
+		sequence.add(new Wait(6));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetDialog("For your first task you can talk to me by that old stall to see which fate you choose..."));
 		sequence.add(new Wait(6));
 		sequence.add(new Position(fortuneteller, Courtyard, "BigStall"));
 		sequence.add(new Position(guard1, Courtyard, "Horse"));
@@ -420,8 +423,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getCourtYard() {
 		var sequence = new ActionSequence();
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("The King has been treating peasants unfairly. It is time to take a stand!"));
-		sequence.add(new SetDialog("Maybe those books on the stall can give you some guidance"));
+		sequence.add(new SetDialog("Good Day Edith. It is time to make a choice for which path you shall take to bring justice to the land. You may either choose the evil book or the green book. Choose Wisely!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -430,7 +432,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, greenbook));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("This is a Fortune Book! Go to the BlackSmith for your next adventure!"));
+		sequence.add(new SetDialog("You have chosen the green book! This is a fortune book that shows your next task is at the Blacksmiths shop! Go there now to continue your quest!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		sequence.add(new Pocket(edith, greenbook));
@@ -444,7 +446,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(warlock, BlackSmith, "Target"));
 		sequence.add(new Position(edith, BlackSmith, "Door"));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("Edith! Stock up on equipment before your fight with the king!"));
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("Greetings Edith, I am very glad the green book has sent you to my shop. I have crafted some equipment and supplies for you to battle the king with. Choose either a sword or the spellbook as your weapon."));
 		sequence.add(new Wait(6));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Create<Item>(helmet));
@@ -463,7 +466,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Take(edith, sword));
 		sequence.add(new Pocket(edith, sword));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("Grab some more gear just in case"));
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("The mighty sword…Good Choice Edith! You are getting ready for battle! For some extra protection against King Nikos and his guards choose either the helmet or the torch."));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -473,7 +477,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Take(edith, helmet));
 		sequence.add(new Pocket(edith, helmet));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("You should be good to go. Go confront the king!"));
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("Aye the helmet! I think I have the rest of the armour in the back of the shop. Let me get you the rest of the suit and then Edith you are ready for battle at the Kings Courtyard! Good luck we serfs are counting on you!"));
 		sequence.add(new Wait(5));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -483,7 +488,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, torch));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("This is surely enough to take down the king!"));
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("Aye the torch! You shall hopefully burn the king to the ground. You are ready for battle Edith at the Kings Courtyard. Good luck we serfs are counting on you!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -495,9 +501,14 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.combineWith(new CharacterCreation(king));
 		sequence.add(new Position(king, Courtyard));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("You've been treating the peasants unfairly! I've come to kill you!"));
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos...You've been treating the serfs unfairly! I've come to kill you and restore the the greatness of this land!"));
 		sequence.add(new Wait(4));
-		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please!"));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Edith. You are right. I have been cruel. But I promise I will make things fair! Don't kill me please!"));
 		sequence.add(new Wait(3));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -506,19 +517,24 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getYouDie() {
 		var sequence = new ActionSequence();
 		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
 		sequence.add(new SetDialog("Ok King Nikos I will put down my sword..."));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new PutDown(edith, sword));
 		sequence.add(new Unpocket(king, sword));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("Begon you peasant! I will rule forever and ever!"));
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Begon you peasant! I have tricked you! I will rule forever and ever! You are standing in my way so you must die!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Attack(king, edith, true));
 		sequence.add(new Die(edith));
 		sequence.add(new SetCameraFocus(king));
 		sequence.add(new Dance(king));
+		sequence.add(new ShowMenu(true));
 		
 		return sequence;
 	}
@@ -526,14 +542,19 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getSwordBecomeKing() {
 		var sequence = new ActionSequence();
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("Begon King Nikos! I will be the Queen now!"));
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("Begon King Nikos! You must die for the good of town! I will be the Queen now!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Draw(edith, sword));
 		sequence.add(new Attack(edith, king, true));
 		sequence.add(new Die(king));
-		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! The faith and goodness of the serfs and the kindgom is restored!"));
+		sequence.add(new SetCameraFocus(edith));
 		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
@@ -543,19 +564,36 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Position(edith, Courtyard, "Exit"));
 		sequence.combineWith(new CharacterCreation(king));
 		sequence.add(new Position(king, Courtyard));
-		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
-		sequence.add(new SetDialog("I've come to kill you and burn this dang castle to the ground!!!"));
-		sequence.add(new SetDialog("I will make things fair I promise! Don't kill me please, I beg you!"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos...You've been treating the peasants unfairly. I've come to kill you and burn this castle to the ground!!!"));
+		sequence.add(new Wait(4));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Dear Edith..I will make things fair I promise! Don't kill me please, I beg you!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 	
 	private ActionSequence getTorchBecomeKing() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("It's too late for apologies!"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("It's too late for apologies! You must die King Nikos for the good of the town!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		sequence.add(new Draw(edith, torch));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new Die(king));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
 		sequence.add(new SetDialog("Begon King Nikos, I'm the Queen now! hahahaha!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
 		sequence.add(new ShowMenu(true));
 		return sequence;
@@ -566,9 +604,21 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Pocket(edith, torch));
 		sequence.add(new Draw(edith, sword));
 		sequence.add(new Attack(edith, king, false));;
-		sequence.add(new SetDialog("It's too late for apologies!"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("It's too late for apologies King Nikos! You must die for the good of the land!"));
+		sequence.add(new Wait(4));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
 		sequence.add(new SetDialog("Guards come quick!"));
+		sequence.add(new Wait(4));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(guard1));
 		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		// sequence.add(new WalkTo);
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(guard2));
@@ -581,6 +631,10 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getTakeSpellBook() {
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, spellBook));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("Spellbook…Good Choice Edith! You now must study this spellbook to gain knowledge of spells that will help you defeat the evil king! But, if you feel prepared you can return straight back to the Kings Courtyard to battle him for your freedom. Would you like to study the spell book or return to the Kings Courtyard?"));
+		//Selection choice to read spell book or go to courtyard 2c
 		return sequence;
 	}
 	
