@@ -57,7 +57,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested, GoToCourtYard1C, ReadGreenBook, BadTalkYouDie, BeFriendKing,
-		WarlockTalk, KingTalk1, KingTalk2
+		WarlockTalk, KingTalk1, KingTalk2, KingTalk3
 	}
 	public enum ChoiceLabels {
 		DrinkMakesWeak, StudyEvilBook, ReadSpellBook, ReadGreenBook
@@ -112,6 +112,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var WarlockTalkNode = new Node(NodeLabels.WarlockTalk.toString());
 		var KingTalk1Node = new Node(NodeLabels.KingTalk1.toString());
 		var KingTalk2Node = new Node(NodeLabels.KingTalk2.toString());
+		var KingTalk3Node = new Node(NodeLabels.KingTalk3.toString());
 		
 		root.addChild(
 				new SelectionChoice("Start"), 
@@ -372,19 +373,26 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				ActionChoice.Icons.door, 
 				"Go Back to CourtYard!", 
 				false), 
+				KingTalk3Node);
+		
+		KingTalk3Node.addChild(new ActionChoice(ActionNames.ShowDialog.toString(), 
+				king, 
+				ActionChoice.Icons.talk, 
+				"Speak with the king", 
+				false), 
 				GoToCourtYard1CNode);
 		
 		GoToCourtYard1CNode.addChild(new ActionChoice(ActionNames.Give.toString(),
 				king,
 				ActionChoice.Icons.book, 
-				"Give the King the book!", 
+				"Show the King the Laws!", 
 				false), 
 				BeFriendKingNode);
 		
 		GoToCourtYard1CNode.addChild(new ActionChoice(ActionNames.ShowDialog.toString(),
 				king,
 				ActionChoice.Icons.talk, 
-				"Talk to the King", 
+				"Listen to King's Response", 
 				false), 
 				BadTalkYouDieNode);
 		
@@ -676,7 +684,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(warlock));
-		sequence.add(new SetDialog("Spellbook... Good Choice Edith! You now must stufy this spellbook to gain knowledge of spells that will help you defeat the evil king!"));
+		sequence.add(new SetDialog("Spellbook... Good Choice Edith! You now must study this spellbook to gain knowledge of spells that will help you defeat the evil king!"));
 		sequence.add(new Wait(1));
 		sequence.add(new HideDialog());
 		sequence.add(new Unpocket(edith, spellBook));
@@ -765,18 +773,41 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getReadGreenBook() {
 		var sequence = new ActionSequence();
+		sequence.add(new HideDialog());
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(warlock));
+		sequence.add(new SetDialog("Good Choice Edith! You now must study the greenbook to gain knowledge of the laws of the land that will help you overthrow the evil king!"));
+		sequence.add(new Wait(1));
+		sequence.add(new HideDialog());
+		sequence.add(new Unpocket(edith, greenbook));
 		sequence.add(new LookAt(edith, greenbook));
+		sequence.add(new Wait(1));
+		sequence.add(new Pocket(edith, greenbook));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetDialog("Aye you have read the laws of the land in the greenbook! You have learned the Law of Dinglesh that states that a King who has reigned for more than 10 years must give up his throne. King Nikos has reigned for nearly 20 years! Present this law to the king and hopefully it will help end his reign! Go now to the Courtyard! Good Luck Edith the faith of our freedom is in your hands!"));
+		sequence.add(new Wait(1));
+		sequence.add(new HideDialog());
+		
+		return sequence;
+	}
+	
+	private ActionSequence getKingTalk3() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, Courtyard));
+		sequence.add(new Position(edith, Courtyard, "Exit"));
+		
 		return sequence;
 	}
 	
 	private ActionSequence getGoToCourtYard1C() {
 		var sequence = new ActionSequence();
-		sequence.add(new Position(edith, Courtyard, "Exit"));
-		sequence.combineWith(new CharacterCreation(king));
-		sequence.add(new Position(king, Courtyard));
-		sequence.add(new SetDialog("You've been treating the peasants unfairly!"));
-		sequence.add(new SetDialog("I've come to kill you with my spells!!!"));
-		sequence.add(new SetDialog("I will make things fair I promise! Don't cast a spell on me please, I beg you!"));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos...you have been treating te serfs unfairly for too long. It is time for your reign to end. I have read the laws of the land and have knowledge of the Law of Dinglesh! Give up your crown now and will spare your life!"));
+		sequence.add(new Wait(1));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 	
@@ -788,8 +819,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getBadTalkYouDie() {
 		var sequence = new ActionSequence();
-		// set dialog
-		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Attack(king, edith, true));
 		return sequence;
 	}
 	
@@ -1007,6 +1037,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		map.add(NodeLabels.WarlockTalk.toString(), getWarlockTalk());
 		map.add(NodeLabels.KingTalk1.toString(), getKingTalk1());
 		map.add(NodeLabels.KingTalk2.toString(), getKingTalk2());
+		map.add(NodeLabels.KingTalk3.toString(), getKingTalk3());
 		return map;
 	}
 
