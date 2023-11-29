@@ -60,7 +60,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	public enum ChoiceLabels {
 		DrinkMakesWeak, StudyEvilBook
 	}
-	
+	// comment
 	
 	public enum ActionNames {Take, Start, exit, LookAt, Drink, Give, Cast, Attack, ShowDialog, Unpocket}
 	
@@ -705,11 +705,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Create<Item>(bluePotion));
 		sequence.add(new Position(bluePotion, alchemyShop, "Bar.Right"));
 		sequence.add(new ShowDialog());
-		// sequence.add(new SetRight(alchemist));
-		// sequence.add(new SetLeft(edith));
 		sequence.add(new SetDialog("Hi Edith. You can take one of the potions if you'd like!"));
 		sequence.add(new Wait(6));
-		//sequence.add(new SelectionChoice("Take the blue or the green potion!"));;
+		
 		sequence.add(new HideDialog());
 
 		return sequence;
