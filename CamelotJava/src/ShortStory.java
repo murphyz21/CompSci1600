@@ -840,7 +840,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(edith));
 		sequence.add(new SetRight(king));
-		sequence.add(new SetDialog("King Nikos...you have been treating te serfs unfairly for too long. It is time for your reign to end. I have read the laws of the land and have knowledge of the Law of Dinglesh! Give up your crown now and will spare your life!"));
+		sequence.add(new SetDialog("King Nikos...you have been treating the serfs unfairly for too long. It is time for your reign to end. I have read the laws of the land and have knowledge of the Law of Dinglesh! Give up your crown now and will spare your life!"));
 		sequence.add(new Wait(1));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -848,14 +848,56 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getBeFriendKing() {
 		var sequence = new ActionSequence();
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Here...Read the green book yourself to see the laws of the land."));
+		sequence.add(new Wait(1));
+		sequence.add(new HideDialog());
 		sequence.add(new Give(edith, greenbook, king));
+		sequence.add(new LookAt(king, greenbook));
+		sequence.add(new Wait(5));
+		sequence.add(new Pocket(king, greenbook));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Edith you are right. I cannot go against the law of the land. My reign should have ended a decade ago. I will give up my crown. I apologize to all the serfs of the land I have treated unfairly. You must rule now Edith! I give up my crown to you!"));
+		sequence.add(new Wait(2));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("Hurrah! There is peace restored to the town!"));
+		sequence.add(new Wait(2));
+		sequence.add(new HideDialog());
+		sequence.add(new Dance(edith));
+		sequence.add(new Dance(king));
+		sequence.add(new ShowMenu(true));
 		return sequence;
-		//lol
 	}
 	
 	private ActionSequence getBadTalkYouDie() {
 		var sequence = new ActionSequence();
-		sequence.add(new Attack(king, edith, true));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Edith how did you find the law of the land! That is supposed to be secure in my courtyard! Nevertheless I do not care about the law. I will reign forever and ever!"));
+		sequence.add(new Wait(2));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Nikos you have left me no choice. I must kill you for the good of the town!"));
+		sequence.add(new Wait(2));
+		sequence.add(new HideDialog());
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Die(king));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("Hurrah! I have killed the king and peace is restored to the land!"));
+		sequence.add(new Wait(2));
+		sequence.add(new HideDialog());
+		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
 	
