@@ -2,7 +2,7 @@ package com.actions;
 
 import com.entities.Character;
 
-public class WalkTo {
+public class WalkTo implements IAction {
 	Character stander;
 	Character walker;
 	

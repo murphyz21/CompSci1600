@@ -4,9 +4,9 @@ import com.entities.Item;
 import com.entities.Character;
 
 public class Give implements IAction{
-	private Character giver;
-	private Character receiver;
-	private Item potion;
+	Character giver;
+	Character receiver;
+	Item potion;
 	
 	public Give(Character giver, Item potion, Character receiver) {
 		this.giver = giver;
@@ -24,6 +24,6 @@ public class Give implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s, %s, %s)", getName(), giver, potion, receiver);
+		return String.format("%s(%s, %s, %s)", getName(), giver.getName(), potion.getName(), receiver.getName());
 	}
 }

@@ -3,9 +3,9 @@ package com.actions;
 import com.entities.Character;
 
 public class Cast implements IAction{
-	private Character caster;
-	private Character target = null;
-	private String color = "red";
+	Character caster;
+	Character target = null;
+	String color = "red";
 	
 	public Cast(Character caster) {
 		this.caster = caster;
@@ -32,6 +32,6 @@ public class Cast implements IAction{
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s, %s, %s)", getName(), caster, target, color.toString());
+		return String.format("%s(%s, %s, %s)", getName(), caster.getName(), target.getName(), color.toString());
 	}
 }
