@@ -5,7 +5,7 @@ import java.util.Optional;
 public class Things {
 	public enum ThingNames{ Tom, Home, Sword, Edith, startCyard, greenbook, guard3, campBegger1, campBegger2, campBegger3, spellBook, Courtyard, 
 		camp, cYard2, Helmet, Torch, king, cYard3, cYard4, guard1, evilbook, alchemyShop, alchemist, poison, cYard5, guard2, cYard6, 
-		bluePotion, greenPotion, cYard7, cYard8, King, Blacksmith, warlock, fortuneteller} 
+		bluePotion, greenPotion, cYard7, cYard8, King, Blacksmith, warlock, fortuneteller, ArmourEdith} 
 	private static Hashtable<ThingNames, IThing<?>> list=new Hashtable<>();
 	public static boolean add(ThingNames name, IThing<?> thing) {
 		if(list.containsKey(name))
