@@ -854,7 +854,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	
 	private ActionSequence getBadTalkYouDie() {
 		var sequence = new ActionSequence();
-		
+		// uh oh
 		return sequence;
 	}
 	
