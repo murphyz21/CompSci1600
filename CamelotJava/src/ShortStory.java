@@ -850,6 +850,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Give(edith, greenbook, king));
 		return sequence;
+		//lol
 	}
 	
 	private ActionSequence getBadTalkYouDie() {
