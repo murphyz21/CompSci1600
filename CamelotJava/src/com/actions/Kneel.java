@@ -1,9 +1,11 @@
 package com.actions;
 
+import com.entities.Character;
+
 public class Kneel implements IAction{
-	private com.entities.Character name;
+	Character name;
 	
-	public Kneel(com.entities.Character king) {
+	public Kneel(Character king) {
 		name = king;
 	}
 	
@@ -16,6 +18,6 @@ public class Kneel implements IAction{
 	}
 
 	public String toString() {
-		return String.format("%s(%s)", getName(), name);
+		return String.format("%s(%s)", getName(), name.getName());
 	}
 }
