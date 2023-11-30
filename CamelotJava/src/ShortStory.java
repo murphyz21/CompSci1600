@@ -57,10 +57,11 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		KingKillsYou, GoToCourtYard2A, WeakFromPoisonDie, WeakGetArrested, BuyPotion, DrinkGivesPowers, GoToCourtYard4A, PowersNotUsedGetArrested, 
 		PowersBecomeKing, GreenBook, GoToCamp, TakeSword, TakeTorch, GoToCourtYard4C, TorchBecomeKing, GuardsArrestYou, GetArmour, GoToCourtYard3C, YouDie, 
 		SwordBecomeKing, TakeSpellBook, ReadSpellBook, GoToCourtYard2C, GoodSpellsKingDies, NoSpellsGetArrested, GoToCourtYard1C, ReadGreenBook, BadTalkYouDie, BeFriendKing,
-		WarlockTalk, KingTalk1, KingTalk2, KingTalk3, KingTalk4, AlchemistTalk, KingTalk5, KingTalk6
+		WarlockTalk, KingTalk1, KingTalk2, KingTalk3, KingTalk4, AlchemistTalk, KingTalk5, KingTalk6, DontDrinkPotion, GoToCourtYard3A, NoPowersGetArrested, NoPowersKingKillsYou, 
+		KingTalk7, KingTalk8
 	}
 	public enum ChoiceLabels {
-		DrinkMakesWeak, StudyEvilBook, ReadSpellBook, ReadGreenBook
+		DrinkMakesWeak, StudyEvilBook, ReadSpellBook, ReadGreenBook, DrinkGivesPowers, DontDrinkPotion
 	}
 	//lol
 	
@@ -119,6 +120,12 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var AlchemistTalkNode = new Node(NodeLabels.AlchemistTalk.toString());
 		var KingTalk5Node = new Node(NodeLabels.KingTalk5.toString());
 		var KingTalk6Node = new Node(NodeLabels.KingTalk6.toString());
+		var DontDrinkPotionNode = new Node(NodeLabels.DontDrinkPotion.toString());
+		var GoToCourtYard3ANode = new Node(NodeLabels.GoToCourtYard3A.toString());
+		var NoPowersGetArrestedNode = new Node(NodeLabels.NoPowersGetArrested.toString());
+		var NoPowersKingKillsYouNode = new Node(NodeLabels.NoPowersKingKillsYou.toString());
+		var KingTalk7Node = new Node(NodeLabels.KingTalk7.toString());
+		var KingTalk8Node = new Node(NodeLabels.KingTalk8.toString());
 		
 		root.addChild(
 				new SelectionChoice("Start"), 
@@ -237,17 +244,21 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				false), 
 				WeakGetArrestedNode);
 		
-		BuyPotionNode.addChild(new ActionChoice(ActionNames.Drink.toString(),
-				bluePotion, 
-				ActionChoice.Icons.drink,
-				"Drink the potion", 
-				false), 
-				DrinkGivesPowersNode);
+		BuyPotionNode.addChild(new SelectionChoice(ChoiceLabels.DrinkGivesPowers.toString()), DrinkGivesPowersNode);
+		
+		BuyPotionNode.addChild(new SelectionChoice(ChoiceLabels.DontDrinkPotion.toString()), DontDrinkPotionNode);
 		
 		DrinkGivesPowersNode.addChild(new ActionChoice(ActionNames.exit.toString(),
 				alchemyShop.getFurniture("Door"), 
 				ActionChoice.Icons.exit,
 				"Go Back to the CourtYard", 
+				false), 
+				KingTalk8Node);
+		
+		KingTalk8Node.addChild(new ActionChoice(ActionNames.ShowDialog.toString(), 
+				king, 
+				ActionChoice.Icons.talk,
+				"Speak with the King", 
 				false), 
 				GoToCourtYard4ANode);
 		
@@ -257,12 +268,41 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 				"Cast Spells on the King", 
 				false), 
 				PowersBecomeKingNode);
+		
 		GoToCourtYard4ANode.addChild(new ActionChoice(ActionNames.Attack.toString(),
 				king, 
 				ActionChoice.Icons.hurt,
 				"Attack the King", 
 				false), 
 				PowersNotUsedGetArrestedNode);
+		
+		DontDrinkPotionNode.addChild(new ActionChoice(ActionNames.exit.toString(),
+				alchemyShop.getFurniture("Door"), 
+				ActionChoice.Icons.exit,
+				"Go Back to the CourtYard", 
+				false), 
+				KingTalk7Node);
+		
+		KingTalk7Node.addChild(new ActionChoice(ActionNames.ShowDialog.toString(), 
+				king, 
+				ActionChoice.Icons.talk,
+				"Speak with the King", 
+				false), 
+				GoToCourtYard3ANode);
+		
+		GoToCourtYard3ANode.addChild(new ActionChoice(ActionNames.ShowDialog.toString(),
+				king, 
+				ActionChoice.Icons.talk,
+				"Talk to the King", 
+				false), 
+				NoPowersKingKillsYouNode);
+		
+		GoToCourtYard3ANode.addChild(new ActionChoice(ActionNames.Attack.toString(),
+				king, 
+				ActionChoice.Icons.hurt,
+				"Attack the King", 
+				false), 
+				NoPowersGetArrestedNode);
 	
 		
 		// left side of story
@@ -1203,10 +1243,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 
 	private ActionSequence getBuyPotion() {
 		var sequence = new ActionSequence();
-		sequence.add(new SetDialog("Mr. Alchemist Im on a revolution to kill the king, what potion should I choose?"));
-		sequence.add(new SetDialog("Ayyy hurrah, Take the green one or the blue one little lassy."));
-		sequence.add(new Take(edith, bluePotion, alchemyShop.getFurniture("Bar.Right")));
-		sequence.add(new AddToList(bluePotion, "this is the blue potion!"));
+		sequence.add(new Take(edith, bluePotion));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(alchemist));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Oooo the blue potion...I accidently bumped the table just a little when I was working on that one...I'm not sure what is in that one Edith..."));
+		sequence.add(new SetDialog("[DontDrinkPotion|Don't Drink the Blue Potion!]"));
+		sequence.add(new SetDialog("[DrinkGivesPowers|Drink the Blue Potion!]"));
 		return sequence;
 	}
 	 
@@ -1217,12 +1260,28 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
-
-	private ActionSequence getGoToCourtYard4A() {
+	
+	private ActionSequence getKingTalk8() {
 		var sequence = new ActionSequence();
 		sequence.combineWith(new CharacterCreation(king));
 		sequence.add(new Position(king, Courtyard));
-		sequence.add(new Position(edith, Courtyard));
+		sequence.add(new Position(edith, Courtyard, "Exit"));
+		return sequence;
+	}
+
+	private ActionSequence getGoToCourtYard4A() {
+		var sequence = new ActionSequence();
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos...you have been treating the serfs unfairly for too long. It is time for your reign to end!"));
+		sequence.add(new Wait(3));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("I will never give up my crown! I will reign forever and ever!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
 		return sequence;
 	}
 
@@ -1246,6 +1305,110 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Cast(edith, king, "blue"));
 		sequence.add(new Die(king));
 		sequence.add(new Dance(edith));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+	
+	private ActionSequence getDontDrinkPotion() {
+		var sequence = new ActionSequence();
+		sequence.add(new HideDialog());
+		sequence.add(new Pocket(edith, bluePotion));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(alchemist));
+		sequence.add(new SetDialog("Thank you for the potion! I will take it with me on my quest to go end the Kings reign! I must hurry along and go now but thank you for your help Mr Alchemist! I wont let you down! "));
+		sequence.add(new Wait(3));
+		sequence.add(new HideDialog());
+		return sequence;
+	}
+	
+	private ActionSequence getKingTalk7() {
+		var sequence = new ActionSequence();
+		sequence.combineWith(new CharacterCreation(king));
+		sequence.add(new Position(king, Courtyard));
+		sequence.add(new Position(edith, Courtyard, "Exit"));
+		return sequence;
+	}
+
+	private ActionSequence getGoToCourtYard3A() {
+		var sequence = new ActionSequence();
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos...you have been treating the serfs unfairly for too long. It is time for your reign to end!"));
+		sequence.add(new Wait(3));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("I will never give up my crown! I will reign forever and ever!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
+		return sequence;
+	}
+
+	private ActionSequence getNoPowersGetArrested() {
+		var sequence = new ActionSequence();
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos! I don't want to kill you with my powers so you must surrender your throne!"));
+		sequence.add(new Wait(3));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("I will never back down you evil peasant!"));
+		sequence.add(new Wait(4));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("You leave me no choice then..."));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
+		sequence.add(new Attack(edith, king, false));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Hahaha you evil peasant. You should've used your powers! Arrest her immediately guards!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
+		sequence.add(new WalkTo(guard1, edith));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(guard1));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Edith you are arrested for treason and are banished to the scary island!"));
+		sequence.add(new Wait(5));
+		sequence.add(new HideDialog());
+		sequence.add(new Dance(guard1));
+		sequence.add(new Dance(king));
+		sequence.add(new ShowMenu(true));
+		return sequence;
+	}
+
+	private ActionSequence getNoPowersKingKillsYou() { 
+		var sequence = new ActionSequence();
+		sequence.add(new Create<Item>(sword));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(edith));
+		sequence.add(new SetRight(king));
+		sequence.add(new SetDialog("King Nikos! I don't want to fight you! You must surrender your throne!"));
+		sequence.add(new Wait(3));
+		sequence.add(new ClearDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("I will never back down you evil peasant!"));
+		sequence.add(new Wait(4));
+		sequence.add(new HideDialog());
+		sequence.add(new Unpocket(king, sword));
+		sequence.add(new Attack(king, edith, true));
+		sequence.add(new Die(edith));
+		sequence.add(new SetCameraFocus(king));
+		sequence.add(new ShowDialog());
+		sequence.add(new SetLeft(king));
+		sequence.add(new SetRight(edith));
+		sequence.add(new SetDialog("Hurrah I have slain the evil peasant. I will reign forever and ever!!"));
+		sequence.add(new Wait(3));
+		sequence.add(new HideDialog());
+		sequence.add(new Dance(king));
 		sequence.add(new ShowMenu(true));
 		return sequence;
 	}
@@ -1299,6 +1462,12 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		map.add(NodeLabels.AlchemistTalk.toString(),  getAlchemistTalk());
 		map.add(NodeLabels.KingTalk5.toString(), getKingTalk5());
 		map.add(NodeLabels.KingTalk6.toString(), getKingTalk6());
+		map.add(NodeLabels.DontDrinkPotion.toString(), getDontDrinkPotion());
+		map.add(NodeLabels.GoToCourtYard3A.toString(), getGoToCourtYard3A());
+		map.add(NodeLabels.NoPowersGetArrested.toString(), getNoPowersGetArrested());
+		map.add(NodeLabels.NoPowersKingKillsYou.toString(), getNoPowersKingKillsYou());
+		map.add(NodeLabels.KingTalk7.toString(), getKingTalk7());
+		map.add(NodeLabels.KingTalk8.toString(), getKingTalk8());
 		return map;
 	}
 
