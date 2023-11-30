@@ -22,9 +22,11 @@ import com.actions.Pocket;
 import com.actions.Position;
 import com.actions.PutDown;
 import com.actions.SetCameraFocus;
+import com.actions.SetCredits;
 import com.actions.SetDialog;
 import com.actions.SetLeft;
 import com.actions.SetRight;
+import com.actions.ShowCredits;
 import com.actions.ShowDialog;
 import com.actions.ShowMenu;
 import com.actions.Take;
@@ -537,6 +539,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new EnableInput(true));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(fortuneteller));
+		sequence.add(new SetRight(edith));
 		sequence.add(new SetDialog("Greetings Edith! Thou hast returned to the ancient town of Ravenholm! You and the fellow serfs hath grown miserable under the tyrannical rule of King Nikos. His oppression and greed weigheth heavily upon the shoulders of the common folk and the time for change is upon us! Thou hast been chosen to lead the rebellion. The destiny of the town lies in your hands. Choose wisely to end the reign of King Nikos and restore righteousness to the land! "));
 		sequence.add(new Wait(1));
 		sequence.add(new ClearDialog());
@@ -568,7 +571,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Take(edith, greenbook));
 		sequence.add(new ShowDialog());
-		sequence.add(new SetDialog("You have chosen the green book! This is a fortune book that shows your next task is at the Blacksmiths shop! Go there now to continue your quest!"));
+		sequence.add(new SetDialog("You have chosen the green book! This is a fortune book that shows your next task is at the Blacksmith shop! Go there now to continue your quest!"));
 		sequence.add(new Wait(6));
 		sequence.add(new HideDialog());
 		sequence.add(new Pocket(edith, greenbook));
@@ -578,9 +581,9 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 	private ActionSequence getWarlockTalk() {
 		var sequence = new ActionSequence();
 		sequence.add(new Create<Place>(BlackSmith));
-		sequence.add(new Position(edith, BlackSmith, "Door"));
 		sequence.combineWith(new CharacterCreation(warlock));
 		sequence.add(new Position(warlock, BlackSmith, "Target"));
+		sequence.add(new Position(edith, BlackSmith, "Door"));
 		sequence.add(new Create<Item>(sword));
 		sequence.add(new Create<Item>(helmet));
 		sequence.add(new Create<Item>(torch));
@@ -650,7 +653,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(edith2));
 		sequence.add(new SetRight(king));
-		sequence.add(new SetDialog("King Nikos...You have been trating the serfs unfairly! I have come to kill you and restore the greatness of this land!"));
+		sequence.add(new SetDialog("King Nikos...You have been treating the serfs unfairly! I have come to kill you and restore the greatness of this land!"));
 		sequence.add(new Wait(4));
 		sequence.add(new ClearDialog());
 		sequence.add(new SetLeft(king));
@@ -669,19 +672,21 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetDialog("Ok King Nikos I will put down my sword..."));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
+		sequence.add(new Unpocket(edith2, sword));;
 		sequence.add(new PutDown(edith2, sword));
-		sequence.add(new Unpocket(king, sword));
+		sequence.add(new Draw(king, sword));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(king));
 		sequence.add(new SetRight(edith2));
-		sequence.add(new SetDialog("Begon you peasant! I have tricked you! I will rule forever and ever! You are standing in my way so you must die!"));
+		sequence.add(new SetDialog("Begone you peasant! I have tricked you! I will rule forever and ever! You are standing in my way so you must die!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Attack(king, edith2, true));
 		sequence.add(new Die(edith2));
 		sequence.add(new SetCameraFocus(king));
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		
 		return sequence;
 	}
@@ -691,16 +696,17 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(edith2));
 		sequence.add(new SetRight(king));
-		sequence.add(new SetDialog("Begon King Nikos! You must die for the good of the town! I will be the Queen now!"));
+		sequence.add(new SetDialog("Begone King Nikos! You must die for the good of the town! I will be the Queen now!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Draw(edith2, sword));
 		sequence.add(new Attack(edith2, king, true));
 		sequence.add(new Die(king));
 		sequence.add(new SetLeft(edith2));
-		sequence.add(new SetDialog("Begon King Nikos! I am Queen now! The faith and goodness of the serfs and the kingdom is restored!"));
+		sequence.add(new SetDialog("Begone King Nikos! I am Queen now! The faith and goodness of the serfs and the kingdom is restored!"));
 		sequence.add(new Dance(edith2));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -722,7 +728,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new ClearDialog());
 		sequence.add(new SetLeft(king));
 		sequence.add(new SetRight(edith));
-		sequence.add(new SetDialog("Dear Edith..I will make things fair I promise! Don't kill me please, I beg you!"));
+		sequence.add(new SetDialog("Dear Edith..I will make things fair I promise! Don't kill me please! I beg you!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		return sequence;
@@ -736,15 +742,17 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetDialog("It's too late for apologies! You must die King Nikos for the good of the town!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
-		sequence.add(new Attack(edith, king, false));
+		sequence.add(new Draw(edith, torch));
+		sequence.add(new Attack(edith, king, true));
 		sequence.add(new Die(king));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(edith));
-		sequence.add(new SetDialog("Begone King Nikos! I'm the Queen now! hahahaha!"));
+		sequence.add(new SetDialog("Begone King Nikos! I'm the Queen now! Hahahaha!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -779,7 +787,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -863,7 +872,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(king));
 		sequence.add(new Dance(guard1));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -880,11 +890,12 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Die(king));
 		sequence.add(new ShowDialog());
 		sequence.add(new SetLeft(edith));
-		sequence.add(new SetDialog("Begon King Nikos I am the Queen now! hahahaha!"));
+		sequence.add(new SetDialog("Begone King Nikos I am the Queen now! hahahaha!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -953,7 +964,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -979,7 +991,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Wait(2));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -1094,6 +1107,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Wait(3));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(edith));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		
 		return sequence;
 	}
@@ -1124,7 +1139,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Wait(3));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
@@ -1197,7 +1213,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Wait(3));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
@@ -1237,7 +1254,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(king));
 		sequence.add(new Dance(guard1));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
@@ -1257,7 +1275,6 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new Drink(edith));
 		sequence.add(new SetDialog("Wow, this potion gave me so many new powers!"));
-		sequence.add(new Exit(edith, alchemyShop.getFurniture("Door"), true));
 		return sequence;
 	}
 	
@@ -1289,13 +1306,13 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		var sequence = new ActionSequence();
 		sequence.add(new SetDialog("King Nikos, I don't want to kill you with my powers, you must surrender your throne!"));
 		sequence.add(new SetDialog("I will never back down!"));
+		sequence.add(new Draw(king, sword));
 		sequence.add(new Attack(edith, king, false));
 		sequence.add(new SetDialog("You should've used your powers! Arrest her immediately guards!"));
 		sequence.add(new Dance(guard1));
-		sequence.add(new Dance(guard2));
-		sequence.add(new Dance(guard3));
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
@@ -1305,7 +1322,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Cast(edith, king, "blue"));
 		sequence.add(new Die(king));
 		sequence.add(new Dance(edith));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 	
@@ -1380,7 +1398,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(guard1));
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
@@ -1398,7 +1417,7 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new SetDialog("I will never back down you evil peasant!"));
 		sequence.add(new Wait(4));
 		sequence.add(new HideDialog());
-		sequence.add(new Unpocket(king, sword));
+		sequence.add(new Draw(king, sword));
 		sequence.add(new Attack(king, edith, true));
 		sequence.add(new Die(edith));
 		sequence.add(new SetCameraFocus(king));
@@ -1409,7 +1428,8 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		sequence.add(new Wait(3));
 		sequence.add(new HideDialog());
 		sequence.add(new Dance(king));
-		sequence.add(new ShowMenu(true));
+		sequence.add(new ShowCredits());
+		sequence.add(new SetCredits(""));
 		return sequence;
 	}
 
