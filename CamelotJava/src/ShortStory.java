@@ -437,12 +437,12 @@ public class ShortStory implements IStory, IAction, IThing, IEntity{
 		edith = new Character(ThingNames.Edith.toString(), Character.BodyTypes.C, Character.Clothing.Peasant, Character.HairStyle.Long);
 		edith2 = new Character(ThingNames.ArmourEdith.toString(), Character.BodyTypes.C, Character.Clothing.LightArmour, Character.HairStyle.Long);
 		king = new Character(ThingNames.king.toString(), Character.BodyTypes.H, Character.Clothing.King);
-		guard1 = new Character(ThingNames.guard1.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
+		guard1 = new Character(ThingNames.Guard.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
 		guard2 = new Character(ThingNames.guard2.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
 		guard3 = new Character(ThingNames.guard3.toString(), Character.BodyTypes.D, Character.Clothing.HeavyArmour);
-		alchemist = new Character(ThingNames.alchemist.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
-		fortuneteller = new Character(ThingNames.fortuneteller.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
-		warlock =  new Character(ThingNames.warlock.toString(), Character.BodyTypes.D, Character.Clothing.Warlock);
+		alchemist = new Character(ThingNames.Alchemist.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
+		fortuneteller = new Character(ThingNames.FortuneTeller.toString(), Character.BodyTypes.B, Character.Clothing.Priest);
+		warlock =  new Character(ThingNames.Warlock.toString(), Character.BodyTypes.D, Character.Clothing.Warlock);
 		
 		BlackSmith = new Place(ThingNames.Blacksmith.toString(), Places.Blacksmith);
 		alchemyShop = new Place(ThingNames.alchemyShop.toString(), Places.AlchemyShop);
