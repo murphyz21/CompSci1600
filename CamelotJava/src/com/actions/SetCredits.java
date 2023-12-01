@@ -1,6 +1,6 @@
 package com.actions;
 
-public class SetCredits {
+public class SetCredits implements IAction {
 	private String line;
 	
 	public SetCredits(String line) {
@@ -8,7 +8,7 @@ public class SetCredits {
 	}
 	
 	public String getName() {
-		return "SetDialog";
+		return "SetCredits";
 	}
 	
 	public boolean getShouldWait() {
